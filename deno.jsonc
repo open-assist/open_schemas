@@ -1,0 +1,11 @@
+{
+  "exclude": ["npm_*/", "scripts/", "templates/", ".prettierrc.json", "*/*/README.md"],
+  "imports": {
+    "dnt": "https://deno.land/x/dnt@0.39.0/mod.ts",
+    "zod": "https://deno.land/x/zod@v3.16.1/mod.ts"
+  },
+  "tasks": {
+    "sync:zod-openai": "deno run -A npm:openapi-zod-client@1.5.1 https://raw.githubusercontent.com/openai/openai-openapi/master/openapi.yaml -o ./zod/openai/mod.ts -t ./templates/schemas.hbs -p .prettierrc.json --export-schemas",
+    "build:zod-openai": "deno run -A scripts/build_zod_openai.ts"
+  }
+}
