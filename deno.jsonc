@@ -6,7 +6,6 @@
   },
   "tasks": {
     "sync:zod-openai": "deno run -A npm:openapi-zod-client@1.5.1 https://raw.githubusercontent.com/openai/openai-openapi/master/openapi.yaml -o ./zod/openai/mod.ts -t ./templates/zod_schemas.hbs -p .prettierrc.json --export-schemas",
-    "build": "deno task build:zod-googleai && deno task build:zod-openai",
     "build:zod-googleai": "deno run -A scripts/build_zod_googleai.ts",
     "build:zod-openai": "deno run -A scripts/build_zod_openai.ts"
   }
