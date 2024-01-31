@@ -1,19 +1,19 @@
 import { build, emptyDir } from "dnt";
 
-const inDir = "./zod/openai";
-const outDir = "./npm_zod_openai";
+const inDir = "./zod/googleai";
+const outDir = "./npm_zod_googleai";
 await emptyDir(outDir);
 
 await build({
-  entryPoints: ["./zod/openai/mod.ts"],
+  entryPoints: ["./zod/googleai/mod.ts"],
   outDir,
   shims: {
     deno: false,
   },
   package: {
-    name: "@open-schemas/zod-openai",
+    name: "@open-schemas/zod-googleai",
     version: Deno.args[0],
-    description: "Zod schemas for the OpenAPI of OpenAI.",
+    description: "Zod schemas for the API of Google AI.",
     license: "MIT",
     repository: {
       type: "git",
@@ -30,7 +30,6 @@ await build({
     },
   },
   postBuild() {
-    // steps to run after building and before running the tests
     Deno.copyFileSync("LICENSE", `${outDir}/LICENSE`);
     Deno.copyFileSync(`${inDir}/README.md`, `${outDir}/README.md`);
   },
