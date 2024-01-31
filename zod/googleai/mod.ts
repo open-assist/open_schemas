@@ -20,14 +20,14 @@ export type FunctionResponse = z.infer<typeof FunctionResponse>;
 
 export const Part = z.object({
   text: z.string().optional(),
-  InlineData: Blob.optional(),
+  inlineData: Blob.optional(),
   functionCall: FunctionCall.optional(),
   functionResponse: FunctionResponse.optional(),
 });
 export type PartType = z.infer<typeof Part>;
 
 export const Content = z.object({
-  parts: z.array(Part),
+  parts: z.array(Part).optional(),
   role: z.string().optional(),
 });
 export type ContentType = z.infer<typeof Content>;
