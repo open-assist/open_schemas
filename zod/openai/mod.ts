@@ -603,7 +603,7 @@ export type DeleteAssistantResponseType = z.infer<typeof DeleteAssistantResponse
 export const CreateMessageRequest = z.object({
   role: z.enum(["user"]),
   content: z.string().min(1).max(32768),
-  file_ids: z.array(z.string()).min(1).max(10).optional().default([]),
+  file_ids: z.array(z.string()).max(10).optional().default([]),
   metadata: z.object({}).partial().nullish(),
 });
 export type CreateMessageRequestType = z.infer<typeof CreateMessageRequest>;
@@ -751,8 +751,8 @@ export const RunObject = z.object({
   cancelled_at: z.number().int().nullable(),
   failed_at: z.number().int().nullable(),
   completed_at: z.number().int().nullable(),
-  model: z.string(),
-  instructions: z.string(),
+  model: z.string().nullable(),
+  instructions: z.string().nullable(),
   tools: z
     .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
     .max(20)
