@@ -94,7 +94,8 @@ export const BlockReason = z.enum(["BLOCK_REASON_UNSPECIFIED", "SAFETY", "OTHER"
 export type BlockReasonType = z.infer<typeof BlockReason>;
 
 export const PromptFeedback = z.object({
-  blockReason: BlockReason,
+  blockReason: BlockReason.nullish(),
+  safetyRatings: z.array(SafetyRating).nullish(),
 });
 export type PromptFeedbackType = z.infer<typeof PromptFeedback>;
 
