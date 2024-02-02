@@ -663,9 +663,9 @@ export const MessageContentTextObject = z.object({
   type: z.enum(["text"]),
   text: z.object({
     value: z.string(),
-    annotations: z.array(
-      z.union([MessageContentTextAnnotationsFileCitationObject, MessageContentTextAnnotationsFilePathObject])
-    ),
+    annotations: z
+      .array(z.union([MessageContentTextAnnotationsFileCitationObject, MessageContentTextAnnotationsFilePathObject]))
+      .nullish(),
   }),
 });
 export type MessageContentTextObjectType = z.infer<typeof MessageContentTextObject>;
@@ -677,10 +677,10 @@ export const MessageObject = z.object({
   thread_id: z.string(),
   role: z.enum(["user", "assistant"]),
   content: z.array(z.union([MessageContentImageFileObject, MessageContentTextObject])),
-  assistant_id: z.string().nullable(),
-  run_id: z.string().nullable(),
-  file_ids: z.array(z.string()).max(10).default([]),
-  metadata: z.object({}).partial().nullable(),
+  assistant_id: z.string().nullish(),
+  run_id: z.string().nullish(),
+  file_ids: z.array(z.string()).max(10).default([]).nullish(),
+  metadata: z.object({}).partial().nullish(),
 });
 export type MessageObjectType = z.infer<typeof MessageObject>;
 
@@ -744,22 +744,22 @@ export const RunObject = z.object({
       type: z.enum(["submit_tool_outputs"]),
       submit_tool_outputs: z.object({ tool_calls: z.array(RunToolCallObject) }),
     })
-    .nullable(),
-  last_error: z.object({ code: z.enum(["server_error", "rate_limit_exceeded"]), message: z.string() }).nullable(),
+    .nullish(),
+  last_error: z.object({ code: z.enum(["server_error", "rate_limit_exceeded"]), message: z.string() }).nullish(),
   expires_at: z.number().int(),
-  started_at: z.number().int().nullable(),
-  cancelled_at: z.number().int().nullable(),
-  failed_at: z.number().int().nullable(),
-  completed_at: z.number().int().nullable(),
-  model: z.string().nullable(),
-  instructions: z.string().nullable(),
+  started_at: z.number().int().nullish(),
+  cancelled_at: z.number().int().nullish(),
+  failed_at: z.number().int().nullish(),
+  completed_at: z.number().int().nullish(),
+  model: z.string().nullish(),
+  instructions: z.string().nullish(),
   tools: z
     .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
     .max(20)
     .default([]),
-  file_ids: z.array(z.string()).default([]),
-  metadata: z.object({}).partial().nullable(),
-  usage: RunCompletionUsage.nullable(),
+  file_ids: z.array(z.string()).default([]).nullish(),
+  metadata: z.object({}).partial().nullish(),
+  usage: RunCompletionUsage.nullish(),
 });
 export type RunObjectType = z.infer<typeof RunObject>;
 
