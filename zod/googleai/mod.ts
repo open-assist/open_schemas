@@ -14,21 +14,21 @@ export type FunctionCallType = z.infer<typeof FunctionCall>;
 
 export const FunctionResponse = z.object({
   name: z.string(),
-  response: z.any(),
+  response: z.any().nullish(),
 });
 export type FunctionResponse = z.infer<typeof FunctionResponse>;
 
 export const Part = z.object({
-  text: z.string().optional(),
-  inlineData: Blob.optional(),
-  functionCall: FunctionCall.optional(),
-  functionResponse: FunctionResponse.optional(),
+  text: z.string().nullish(),
+  inlineData: Blob.nullish(),
+  functionCall: FunctionCall.nullish(),
+  functionResponse: FunctionResponse.nullish(),
 });
 export type PartType = z.infer<typeof Part>;
 
 export const Content = z.object({
-  parts: z.array(Part).optional(),
-  role: z.string().optional(),
+  parts: z.array(Part).nullish(),
+  role: z.string().nullish(),
 });
 export type ContentType = z.infer<typeof Content>;
 
@@ -61,9 +61,9 @@ export const HarmProbability = z.enum(["HARM_PROBABILITY_UNSPECIFIED", "NEGLIGIB
 export type HarmProbabilityType = z.infer<typeof HarmProbability>;
 
 export const SafetyRating = z.object({
-  category: HarmCategory,
-  probability: HarmProbability,
-  blocked: z.boolean().optional(),
+  category: HarmCategory.nullish(),
+  probability: HarmProbability.nullish(),
+  blocked: z.boolean().nullish(),
 });
 export type SafetyRatingType = z.infer<typeof SafetyRating>;
 
@@ -82,11 +82,11 @@ export type CitationMetadataType = z.infer<typeof CitationMetadata>;
 
 export const Candidate = z.object({
   content: Content,
-  finishReason: FinishReason.optional(),
-  safetyRatings: z.array(SafetyRating).optional(),
-  citationMetadata: CitationMetadata,
-  tokenCount: z.number().optional(),
-  index: z.number(),
+  finishReason: FinishReason.nullish(),
+  safetyRatings: z.array(SafetyRating).nullish(),
+  citationMetadata: CitationMetadata.nullish(),
+  tokenCount: z.number().nullish(),
+  index: z.number().nullish(),
 });
 export type CandidateType = z.infer<typeof Candidate>;
 
@@ -100,6 +100,6 @@ export type PromptFeedbackType = z.infer<typeof PromptFeedback>;
 
 export const GenerateContentResponse = z.object({
   candidates: z.array(Candidate),
-  promptFeedback: PromptFeedback,
+  promptFeedback: PromptFeedback.nullish(),
 });
 export type GenerateContentResponseType = z.infer<typeof GenerateContentResponse>;
