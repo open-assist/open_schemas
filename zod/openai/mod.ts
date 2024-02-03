@@ -540,24 +540,25 @@ export const AssistantObject = z.object({
   id: z.string(),
   object: z.enum(["assistant"]),
   created_at: z.number().int(),
-  name: z.string().max(256).nullable(),
-  description: z.string().max(512).nullable(),
+  name: z.string().max(256).nullish(),
+  description: z.string().max(512).nullish(),
   model: z.string(),
-  instructions: z.string().max(32768).nullable(),
+  instructions: z.string().max(32768).nullish(),
   tools: z
     .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
     .max(128)
-    .default([]),
-  file_ids: z.array(z.string()).max(20).default([]),
-  metadata: z.object({}).partial().nullable(),
+    .default([])
+    .nullish(),
+  file_ids: z.array(z.string()).max(20).default([]).nullish(),
+  metadata: z.object({}).partial().nullish(),
 });
 export type AssistantObjectType = z.infer<typeof AssistantObject>;
 
 export const ListAssistantsResponse = z.object({
   object: z.string(),
   data: z.array(AssistantObject),
-  first_id: z.string(),
-  last_id: z.string(),
+  first_id: z.string().nullish(),
+  last_id: z.string().nullish(),
   has_more: z.boolean(),
 });
 export type ListAssistantsResponseType = z.infer<typeof ListAssistantsResponse>;
@@ -577,20 +578,18 @@ export const CreateAssistantRequest = z.object({
 });
 export type CreateAssistantRequestType = z.infer<typeof CreateAssistantRequest>;
 
-export const ModifyAssistantRequest = z
-  .object({
-    model: z.string(),
-    name: z.string().max(256).nullable(),
-    description: z.string().max(512).nullable(),
-    instructions: z.string().max(32768).nullable(),
-    tools: z
-      .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
-      .max(128)
-      .default([]),
-    file_ids: z.array(z.string()).max(20).default([]),
-    metadata: z.object({}).partial().nullable(),
-  })
-  .partial();
+export const ModifyAssistantRequest = z.object({
+  model: z.string().optional(),
+  name: z.string().max(256).nullish(),
+  description: z.string().max(512).nullish(),
+  instructions: z.string().max(32768).nullish(),
+  tools: z
+    .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
+    .max(128)
+    .default([]),
+  file_ids: z.array(z.string()).max(20).default([]),
+  metadata: z.object({}).partial().nullish(),
+});
 export type ModifyAssistantRequestType = z.infer<typeof ModifyAssistantRequest>;
 
 export const DeleteAssistantResponse = z.object({
