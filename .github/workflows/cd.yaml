@@ -1,0 +1,39 @@
+name: Continuous Delivery
+
+on:
+  push:
+    tags:
+      - "*"
+jobs:
+  publish:
+    name: Publish packages to npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build GoogleAI schemas
+        run: deno task build:zod-googleai ${{github.ref_name}}
+
+      - name: Build OpenAI schemas
+        run: deno task build:zod-openai ${{github.ref_name}}
+
+      - name: Publish @open-schema/zod-googleai
+        run: cd npm_zod_googleai && npm publish --access public
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Publish @open-schema/zod-openai
+        run: cd npm_zod_openai && npm publish --access public
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
