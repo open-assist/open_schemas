@@ -8,7 +8,7 @@ export type BlobTyp = z.infer<typeof Blob>;
 
 export const FunctionCall = z.object({
   name: z.string(),
-  args: z.any(),
+  args: z.any().nullish(),
 });
 export type FunctionCallType = z.infer<typeof FunctionCall>;
 
@@ -28,7 +28,7 @@ export type PartType = z.infer<typeof Part>;
 
 export const Content = z.object({
   parts: z.array(Part),
-  role: z.string(),
+  role: z.string().nullish(),
 });
 export type ContentType = z.infer<typeof Content>;
 
@@ -98,6 +98,51 @@ export const PromptFeedback = z.object({
   safetyRatings: z.array(SafetyRating).nullish(),
 });
 export type PromptFeedbackType = z.infer<typeof PromptFeedback>;
+
+export const FunctionDeclaration = z.object({
+  name: z.string(),
+  description: z.string(),
+  parameters: z.any().nullish(),
+});
+export type FunctionDeclarationType = z.infer<typeof FunctionDeclaration>;
+
+export const Tool = z.object({
+  functionDeclarations: z.array(FunctionDeclaration),
+});
+export type ToolType = z.infer<typeof Tool>;
+
+export const HarmBlockThreshold = z.enum([
+  "HARM_BLOCK_THRESHOLD_UNSPECIFIED",
+  "BLOCK_LOW_AND_ABOVE",
+  "BLOCK_MEDIUM_AND_ABOVE",
+  "BLOCK_ONLY_HIGH",
+  "BLOCK_NONE",
+]);
+export type HarmBlockThresholdType = z.infer<typeof HarmBlockThreshold>;
+
+export const SafetySetting = z.object({
+  category: HarmCategory,
+  threshold: HarmBlockThreshold,
+});
+export type SafetySettingType = z.infer<typeof SafetySetting>;
+
+export const GenerationConfig = z.object({
+  stopSequences: z.array(z.string()).nullish(),
+  candidateCount: z.number().int().nullish(),
+  maxOutputTokens: z.number().int().nullish(),
+  temperature: z.number().nullish(),
+  topP: z.number().nullish(),
+  topK: z.number().int().nullish(),
+});
+export type GenerationConfigType = z.infer<typeof GenerationConfig>;
+
+export const GenerateContentRequest = z.object({
+  contents: z.array(Content),
+  tools: z.array(Tool).nullish(),
+  safetySettings: z.array(SafetySetting).nullish(),
+  generationConfig: GenerationConfig.nullish(),
+});
+export type GenerateContentRequestType = z.infer<typeof GenerateContentRequest>;
 
 export const GenerateContentResponse = z.object({
   candidates: z.array(Candidate),
