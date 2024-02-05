@@ -787,8 +787,14 @@ export type CreateRunRequestType = z.infer<typeof CreateRunRequest>;
 export const ModifyRunRequest = z.object({ metadata: z.object({}).partial().nullable() }).partial();
 export type ModifyRunRequestType = z.infer<typeof ModifyRunRequest>;
 
+export const ToolOutput = z.object({
+  tool_call_id: z.string(),
+  output: z.string().nullish(),
+});
+export type ToolOutputType = z.infer<typeof ToolOutput>;
+
 export const SubmitToolOutputsRunRequest = z.object({
-  tool_outputs: z.array(z.object({ tool_call_id: z.string(), output: z.string() }).partial()),
+  tool_outputs: z.array(ToolOutput).min(1),
 });
 export type SubmitToolOutputsRunRequestType = z.infer<typeof SubmitToolOutputsRunRequest>;
 
