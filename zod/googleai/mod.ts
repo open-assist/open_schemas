@@ -27,8 +27,8 @@ export const Part = z.object({
 export type PartType = z.infer<typeof Part>;
 
 export const Content = z.object({
-  parts: z.array(Part).nullish(),
-  role: z.string().nullish(),
+  parts: z.array(Part),
+  role: z.string(),
 });
 export type ContentType = z.infer<typeof Content>;
 

@@ -594,8 +594,8 @@ export type ModifyAssistantRequestType = z.infer<typeof ModifyAssistantRequest>;
 
 export const DeleteAssistantResponse = z.object({
   id: z.string(),
-  deleted: z.boolean(),
-  object: z.enum(["assistant.deleted"]),
+  deleted: z.boolean().default(true),
+  object: z.enum(["assistant.deleted"]).default("assistant.deleted"),
 });
 export type DeleteAssistantResponseType = z.infer<typeof DeleteAssistantResponse>;
 
@@ -625,8 +625,8 @@ export type ModifyThreadRequestType = z.infer<typeof ModifyThreadRequest>;
 
 export const DeleteThreadResponse = z.object({
   id: z.string(),
-  deleted: z.boolean(),
-  object: z.enum(["thread.deleted"]),
+  deleted: z.boolean().default(true),
+  object: z.enum(["thread.deleted"]).default("thread.deleted"),
 });
 export type DeleteThreadResponseType = z.infer<typeof DeleteThreadResponse>;
 
