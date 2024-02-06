@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
 
       - name: Install semantic release
         run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git
