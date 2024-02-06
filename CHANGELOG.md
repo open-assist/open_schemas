@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/open-assist/open_schemas/compare/v1.0.0...1.0.1) (2024-02-06)
+
+
+### Bug Fixes
+
+* **zod-openai:** set metadata schema as record ([d0ea28d](https://github.com/open-assist/open_schemas/commit/d0ea28d2accb1c7e298205d0a752b5adf937483b))
+
 # 1.0.0 (2024-02-06)
 
 
