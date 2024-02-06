@@ -839,7 +839,7 @@ export type RunStepDetailsToolCallsRetrievalObjectType = z.infer<typeof RunStepD
 export const RunStepDetailsToolCallsFunctionObject = z.object({
   id: z.string(),
   type: z.enum(["function"]),
-  function: z.object({ name: z.string(), arguments: z.string(), output: z.string().nullable() }),
+  function: z.object({ name: z.string(), arguments: z.string(), output: z.string().nullish() }),
 });
 export type RunStepDetailsToolCallsFunctionObjectType = z.infer<typeof RunStepDetailsToolCallsFunctionObject>;
 
