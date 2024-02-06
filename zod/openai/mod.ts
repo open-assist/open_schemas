@@ -527,6 +527,9 @@ export const CreateModerationResponse = z.object({
 });
 export type CreateModerationResponseType = z.infer<typeof CreateModerationResponse>;
 
+export const Metadata = z.record(z.string().min(1).max(64), z.string().max(512).nullable()).optional().default({});
+export type MetadataType = z.infer<typeof Metadata>;
+
 export const AssistantToolsCode = z.object({ type: z.enum(["code_interpreter"]) });
 export type AssistantToolsCodeType = z.infer<typeof AssistantToolsCode>;
 
@@ -550,7 +553,7 @@ export const AssistantObject = z.object({
     .default([])
     .nullish(),
   file_ids: z.array(z.string()).max(20).default([]).nullish(),
-  metadata: z.object({}).partial().nullish(),
+  metadata: Metadata,
 });
 export type AssistantObjectType = z.infer<typeof AssistantObject>;
 
@@ -607,20 +610,18 @@ export const CreateMessageRequest = z.object({
 });
 export type CreateMessageRequestType = z.infer<typeof CreateMessageRequest>;
 
-export const CreateThreadRequest = z
-  .object({ messages: z.array(CreateMessageRequest), metadata: z.object({}).partial().nullable() })
-  .partial();
+export const CreateThreadRequest = z.object({ messages: z.array(CreateMessageRequest), metadata: Metadata }).partial();
 export type CreateThreadRequestType = z.infer<typeof CreateThreadRequest>;
 
 export const ThreadObject = z.object({
   id: z.string(),
   object: z.enum(["thread"]),
   created_at: z.number().int(),
-  metadata: z.object({}).partial().nullable(),
+  metadata: Metadata,
 });
 export type ThreadObjectType = z.infer<typeof ThreadObject>;
 
-export const ModifyThreadRequest = z.object({ metadata: z.object({}).partial().nullable() }).partial();
+export const ModifyThreadRequest = z.object({ metadata: Metadata }).partial();
 export type ModifyThreadRequestType = z.infer<typeof ModifyThreadRequest>;
 
 export const DeleteThreadResponse = z.object({
