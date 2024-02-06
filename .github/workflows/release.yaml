@@ -1,0 +1,30 @@
+name: Semantic Release
+
+on:
+  schedule:
+    - cron: "30 2 * * 3"
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Automated release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install semantic release
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git
+
+      - name: Semantic release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }}
