@@ -758,9 +758,10 @@ export const RunObject = z.object({
   tools: z
     .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
     .max(20)
-    .default([]),
+    .default([])
+    .nullish(),
   file_ids: z.array(z.string()).default([]).nullish(),
-  metadata: z.object({}).partial().nullish(),
+  metadata: Metadata.nullish(),
   usage: RunCompletionUsage.nullish(),
 });
 export type RunObjectType = z.infer<typeof RunObject>;
@@ -783,11 +784,11 @@ export const CreateRunRequest = z.object({
     .array(z.union([AssistantToolsCode, AssistantToolsRetrieval, AssistantToolsFunction]))
     .max(20)
     .nullish(),
-  metadata: z.object({}).partial().nullish(),
+  metadata: Metadata.nullish(),
 });
 export type CreateRunRequestType = z.infer<typeof CreateRunRequest>;
 
-export const ModifyRunRequest = z.object({ metadata: z.object({}).partial().nullable() }).partial();
+export const ModifyRunRequest = z.object({ metadata: Metadata.nullish() });
 export type ModifyRunRequestType = z.infer<typeof ModifyRunRequest>;
 
 export const ToolOutput = z.object({
