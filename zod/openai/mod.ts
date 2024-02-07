@@ -606,22 +606,24 @@ export const CreateMessageRequest = z.object({
   role: z.enum(["user"]),
   content: z.string().min(1).max(32768),
   file_ids: z.array(z.string()).max(10).optional().default([]),
-  metadata: z.object({}).partial().nullish(),
+  metadata: Metadata.nullish(),
 });
 export type CreateMessageRequestType = z.infer<typeof CreateMessageRequest>;
 
-export const CreateThreadRequest = z.object({ messages: z.array(CreateMessageRequest), metadata: Metadata }).partial();
+export const CreateThreadRequest = z
+  .object({ messages: z.array(CreateMessageRequest), metadata: Metadata.nullish() })
+  .partial();
 export type CreateThreadRequestType = z.infer<typeof CreateThreadRequest>;
 
 export const ThreadObject = z.object({
   id: z.string(),
   object: z.enum(["thread"]),
   created_at: z.number().int(),
-  metadata: Metadata,
+  metadata: Metadata.nullish(),
 });
 export type ThreadObjectType = z.infer<typeof ThreadObject>;
 
-export const ModifyThreadRequest = z.object({ metadata: Metadata }).partial();
+export const ModifyThreadRequest = z.object({ metadata: Metadata.nullish() }).partial();
 export type ModifyThreadRequestType = z.infer<typeof ModifyThreadRequest>;
 
 export const DeleteThreadResponse = z.object({
