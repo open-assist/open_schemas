@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/open-assist/open_schemas/compare/1.0.2...1.0.3) (2024-02-07)
+
+
+### Bug Fixes
+
+* **zod-openai:** set metadata as nullish for run ([6f1fcaa](https://github.com/open-assist/open_schemas/commit/6f1fcaa5ae9f817b1704ac3ccdbc4332b208508b))
+* **zod-openai:** set metadata as nullish for run step ([c6c5cbf](https://github.com/open-assist/open_schemas/commit/c6c5cbf12774642df525bf7a69d2ca74bd31c4f8))
+
 ## [1.0.2](https://github.com/open-assist/open_schemas/compare/1.0.1...1.0.2) (2024-02-07)
 
 
