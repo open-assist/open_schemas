@@ -527,7 +527,7 @@ export const CreateModerationResponse = z.object({
 });
 export type CreateModerationResponseType = z.infer<typeof CreateModerationResponse>;
 
-export const Metadata = z.record(z.string().min(1).max(64), z.string().max(512).nullable()).optional().default({});
+export const Metadata = z.record(z.string().min(1).max(64), z.string().max(512).nullable());
 export type MetadataType = z.infer<typeof Metadata>;
 
 export const AssistantToolsCode = z.object({ type: z.enum(["code_interpreter"]) });
@@ -553,7 +553,7 @@ export const AssistantObject = z.object({
     .default([])
     .nullish(),
   file_ids: z.array(z.string()).max(20).default([]).nullish(),
-  metadata: Metadata,
+  metadata: Metadata.nullish(),
 });
 export type AssistantObjectType = z.infer<typeof AssistantObject>;
 
@@ -577,7 +577,7 @@ export const CreateAssistantRequest = z.object({
     .optional()
     .default([]),
   file_ids: z.array(z.string()).max(20).optional().default([]),
-  metadata: z.object({}).partial().nullish(),
+  metadata: Metadata.nullish(),
 });
 export type CreateAssistantRequestType = z.infer<typeof CreateAssistantRequest>;
 
@@ -591,7 +591,7 @@ export const ModifyAssistantRequest = z.object({
     .max(128)
     .default([]),
   file_ids: z.array(z.string()).max(20).default([]),
-  metadata: z.object({}).partial().nullish(),
+  metadata: Metadata.nullish(),
 });
 export type ModifyAssistantRequestType = z.infer<typeof ModifyAssistantRequest>;
 
