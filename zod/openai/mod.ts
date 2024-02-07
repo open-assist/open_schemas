@@ -881,7 +881,7 @@ export const RunStepObject = z.object({
   cancelled_at: z.number().int().nullable(),
   failed_at: z.number().int().nullable(),
   completed_at: z.number().int().nullable(),
-  metadata: z.object({}).partial().nullable(),
+  metadata: Metadata.nullish(),
   usage: RunStepCompletionUsage.nullable(),
 });
 export type RunStepObjectType = z.infer<typeof RunStepObject>;
