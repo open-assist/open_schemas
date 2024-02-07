@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/open-assist/open_schemas/compare/1.0.1...1.0.2) (2024-02-07)
+
+
+### Bug Fixes
+
+* **zod-openai:** set metadata as nullish for assistant ([62b1032](https://github.com/open-assist/open_schemas/commit/62b10326c7ab0f1d0c4c93e42e7c90c14e431448))
+* **zod-openai:** set metadata as nullish for thread and message ([f1d6442](https://github.com/open-assist/open_schemas/commit/f1d6442732a0a7270d4d8e6cd106d63f48eca95d))
+
 ## [1.0.1](https://github.com/open-assist/open_schemas/compare/v1.0.0...1.0.1) (2024-02-06)
 
 
