@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/open-assist/open_schemas/compare/1.0.3...1.1.0) (2024-03-05)
+
+
+### Features
+
+* **zod-anthropic:** setup zod-anthropic schemas ([2f6714d](https://github.com/open-assist/open_schemas/commit/2f6714d7cf40c0be101d8f58b998505d3fb01067))
+
 ## [1.0.3](https://github.com/open-assist/open_schemas/compare/1.0.2...1.0.3) (2024-02-07)
 
 
