@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/open-assist/open_schemas/compare/1.1.0...1.2.0) (2024-03-07)
+
+
+### Features
+
+* **zod-anthropic:** add schemas for sse ([e6a2611](https://github.com/open-assist/open_schemas/commit/e6a261102cfb0bc1010da0c2c726188f035839c2))
+
 # [1.1.0](https://github.com/open-assist/open_schemas/compare/1.0.3...1.1.0) (2024-03-05)
 
 
