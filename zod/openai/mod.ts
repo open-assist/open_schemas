@@ -109,48 +109,7 @@ export type ChatCompletionFunctionsType = z.infer<typeof ChatCompletionFunctions
 
 export const CreateChatCompletionRequest = z.object({
   messages: z.array(ChatCompletionRequestMessage).min(1),
-  model: z.union([
-    z.union([
-      z.string(),
-      z.enum([
-        "gpt-4-1106-preview",
-        "gpt-4-vision-preview",
-        "gpt-4",
-        "gpt-4-0314",
-        "gpt-4-0613",
-        "gpt-4-32k",
-        "gpt-4-32k-0314",
-        "gpt-4-32k-0613",
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-16k",
-        "gpt-3.5-turbo-0301",
-        "gpt-3.5-turbo-0613",
-        "gpt-3.5-turbo-1106",
-        "gpt-3.5-turbo-16k-0613",
-      ]),
-    ]),
-    z.array(
-      z.union([
-        z.string(),
-        z.enum([
-          "gpt-4-1106-preview",
-          "gpt-4-vision-preview",
-          "gpt-4",
-          "gpt-4-0314",
-          "gpt-4-0613",
-          "gpt-4-32k",
-          "gpt-4-32k-0314",
-          "gpt-4-32k-0613",
-          "gpt-3.5-turbo",
-          "gpt-3.5-turbo-16k",
-          "gpt-3.5-turbo-0301",
-          "gpt-3.5-turbo-0613",
-          "gpt-3.5-turbo-1106",
-          "gpt-3.5-turbo-16k-0613",
-        ]),
-      ])
-    ),
-  ]),
+  model: z.string(),
   frequency_penalty: z.number().gte(-2).lte(2).nullish(),
   logit_bias: z.record(z.number()).nullish(),
   logprobs: z.boolean().nullish(),
