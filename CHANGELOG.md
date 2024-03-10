@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/open-assist/open_schemas/compare/1.2.0...1.3.0) (2024-03-10)
+
+
+### Features
+
+* **zod-ollama:** setup ollama api schemas ([153024d](https://github.com/open-assist/open_schemas/commit/153024d0c85027f0a29f1caf194f4537d46c485d))
+
 # [1.2.0](https://github.com/open-assist/open_schemas/compare/1.1.0...1.2.0) (2024-03-07)
 
 
