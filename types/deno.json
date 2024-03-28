@@ -1,0 +1,8 @@
+{
+  "name": "@open-schemas/types",
+  "version": "0.2.1",
+  "exports": {
+    "./anthropic": "./anthropic/mod.ts",
+    "./openai": "./openai/mod.ts"
+  }
+}

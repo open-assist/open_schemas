@@ -6,7 +6,7 @@ on:
       - "*"
 jobs:
   publish:
-    name: Publish packages to npm
+    name: Publish packages to JSR
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -17,40 +17,14 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Build Anthropic schemas
-        run: deno task build:zod-anthropic ${{github.ref_name}}
+      - name: Generate config files
+        run: deno task gen:jsr ${{github.ref_name}}
 
-      - name: Build Google AI schemas
-        run: deno task build:zod-googleai ${{github.ref_name}}
+      - name: Publish @open-schema/types
+        run: cd types && deno publish
 
-      - name: Build Ollama schemas
-        run: deno task build:zod-ollama ${{github.ref_name}}
+      - name: Publish @open-schema/valibot
+        run: cd valibot && deno publish --allow-slow-types
 
-      - name: Build OpenAI schemas
-        run: deno task build:zod-openai ${{github.ref_name}}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Publish @open-schema/zod-anthropic
-        run: cd npm_zod_anthropic && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Publish @open-schema/zod-googleai
-        run: cd npm_zod_googleai && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Publish @open-schema/zod-ollama
-        run: cd npm_zod_ollama && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: Publish @open-schema/zod-openai
-        run: cd npm_zod_openai && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Publish @open-schema/zod
+        run: cd zod && deno publish --allow-slow-types

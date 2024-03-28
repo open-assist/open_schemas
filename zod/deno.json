@@ -1,0 +1,9 @@
+{
+  "name": "@open-schemas/zod",
+  "version": "0.3.0",
+  "exports": {
+    "./anthropic": "./anthropic/mod.ts",
+    "./openai": "./openai/mod.ts"
+  },
+  "imports": { "zod": "npm:zod@3.22.4" }
+}

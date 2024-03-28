@@ -1,13 +1,21 @@
 {
+  "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
   "exclude": ["scripts/*", "templates/*", ".prettierrc.json", "*/*/README.md"],
   "imports": {
-    "dnt": "https://deno.land/x/dnt@0.40.0/mod.ts",
-    "zod": "https://deno.land/x/zod@v3.22.4/mod.ts"
+    "@deno/dnt": "jsr:@deno/dnt@^0.41.1",
+    "@std/log": "jsr:@std/log@^0.221.0",
+    "typebox-codegen": "https://esm.sh/@sinclair/typebox-codegen@0.9.8",
+    "valibot": "https://esm.sh/valibot@0.30.0",
+    "yup": "https://esm.sh/yup@1.4.0",
+    "zod": "https://esm.sh/zod@3.22.4"
   },
   "tasks": {
-    "build:zod-anthropic": "deno run -A scripts/build_zod_anthropic.ts",
-    "build:zod-googleai": "deno run -A scripts/build_zod_googleai.ts",
-    "build:zod-ollama": "deno run -A scripts/build_zod_ollama.ts",
-    "build:zod-openai": "deno run -A scripts/build_zod_openai.ts"
+    "gen:code": "deno run -A scripts/gen_code.ts",
+    "gen:jsr": "deno run -A scripts/gen_jsr.ts"
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
   }
 }

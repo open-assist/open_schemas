@@ -3,9 +3,9 @@
  *
  * @example
  * ```ts
- * import { CreateMessageRequest } from "@open-schemas/zod/anthropic";
+ * import { CreateMessageRequest } from "@open-schemas/types/anthropic";
  *
- * CreateMessageRequest.parse({});
+ * const request: CreateMessageRequest = {};
  * ```
  *
  * @module
