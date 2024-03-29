@@ -3,12 +3,14 @@ import * as v from "valibot";
 export type ImageContentSource = v.Output<typeof ImageContentSource>;
 export const ImageContentSource = v.object({
   type: v.literal("base64"),
-  media_type: v.nullish(
-    v.union([
-      v.literal("image/jpeg"),
-      v.literal("image/png"),
-      v.literal("image/gif"),
-    ]),
+  media_type: v.optional(
+    v.nullable(
+      v.union([
+        v.literal("image/jpeg"),
+        v.literal("image/png"),
+        v.literal("image/gif"),
+      ]),
+    ),
   ),
   data: v.string(),
 });
@@ -31,25 +33,27 @@ export const Content = v.union([TextContent, ImageContent]);
 export type Message = v.Output<typeof Message>;
 export const Message = v.object({
   role: v.union([v.literal("user"), v.literal("assistant")]),
-  content: v.nullish(v.union([v.string(), v.array(Content)])),
+  content: v.optional(v.nullable(v.union([v.string(), v.array(Content)]))),
 });
 
 export type CreateMessageRequest = v.Output<typeof CreateMessageRequest>;
 export const CreateMessageRequest = v.object({
   model: v.string(),
   messages: v.array(Message, [v.minLength(1)]),
-  system: v.nullish(v.string()),
+  system: v.optional(v.nullable(v.string())),
   max_tokens: v.number([v.minValue(1)]),
-  metadata: v.nullish(
-    v.object({
-      user_id: v.string(),
-    }),
+  metadata: v.optional(
+    v.nullable(
+      v.object({
+        user_id: v.string(),
+      }),
+    ),
   ),
-  stop_sequences: v.nullish(v.array(v.string())),
-  stream: v.nullish(v.boolean()),
-  temperature: v.nullish(v.number([v.minValue(0), v.maxValue(1)])),
-  top_p: v.nullish(v.number()),
-  top_k: v.nullish(v.number()),
+  stop_sequences: v.optional(v.nullable(v.array(v.string()))),
+  stream: v.optional(v.nullable(v.boolean())),
+  temperature: v.optional(v.nullable(v.number([v.minValue(0), v.maxValue(1)]))),
+  top_p: v.optional(v.nullable(v.number())),
+  top_k: v.optional(v.nullable(v.number())),
 });
 
 export type StopReason = v.Output<typeof StopReason>;
@@ -73,7 +77,7 @@ export const CreateMessageResponse = v.object({
   content: v.array(TextContent),
   model: v.string(),
   stop_reason: StopReason,
-  stop_sequence: v.nullish(v.string()),
+  stop_sequence: v.optional(v.nullable(v.string())),
   usage: MessageUsage,
 });
 
@@ -87,8 +91,8 @@ export type MessageDeltaEvent = v.Output<typeof MessageDeltaEvent>;
 export const MessageDeltaEvent = v.object({
   type: v.literal("message_delta"),
   delta: v.object({
-    stop_reason: v.nullish(StopReason),
-    stop_sequence: v.nullish(v.string()),
+    stop_reason: v.optional(v.nullable(StopReason)),
+    stop_sequence: v.optional(v.nullable(v.string())),
   }),
   usage: v.object({
     output_tokens: v.number([v.minValue(0)]),
