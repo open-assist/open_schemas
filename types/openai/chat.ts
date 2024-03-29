@@ -242,9 +242,4 @@ export type ChatCompletionChunkObject = {
    * @default chat.completion.chunk
    */
   object: "chat.completion.chunk";
-  usage: {
-    completion_tokens: number;
-    prompt_tokens: number;
-    total_tokens: number;
-  };
 };

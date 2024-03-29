@@ -84,7 +84,13 @@ export const CreateMessageResponse = v.object({
 export type MessageStartEvent = v.Output<typeof MessageStartEvent>;
 export const MessageStartEvent = v.object({
   type: v.literal("message_start"),
-  message: Message,
+  message: v.object({
+    id: v.string(),
+    type: v.literal("message"),
+    role: v.literal("assistant"),
+    model: v.string(),
+    usage: MessageUsage,
+  }),
 });
 
 export type MessageDeltaEvent = v.Output<typeof MessageDeltaEvent>;

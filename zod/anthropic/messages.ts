@@ -80,7 +80,13 @@ export const CreateMessageResponse = z.object({
 export type MessageStartEvent = z.infer<typeof MessageStartEvent>;
 export const MessageStartEvent = z.object({
   type: z.literal("message_start").default("message_start"),
-  message: Message,
+  message: z.object({
+    id: z.string(),
+    type: z.literal("message"),
+    role: z.literal("assistant"),
+    model: z.string(),
+    usage: MessageUsage,
+  }),
 });
 
 export type MessageDeltaEvent = z.infer<typeof MessageDeltaEvent>;

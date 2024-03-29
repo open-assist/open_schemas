@@ -162,11 +162,14 @@ export type CreateMessageResponse = {
  * ```
  */
 export type MessageStartEvent = {
-  /**
-   * @default message_start
-   */
   type: "message_start";
-  message: Message;
+  message: {
+    id: string;
+    type: "message";
+    role: "assistant";
+    model: string;
+    usage: MessageUsage;
+  };
 };
 
 /**

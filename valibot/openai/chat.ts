@@ -228,9 +228,4 @@ export const ChatCompletionChunkObject = v.object({
   model: v.string(),
   system_fingerprint: v.string(),
   object: v.literal("chat.completion.chunk"),
-  usage: v.object({
-    completion_tokens: v.number(),
-    prompt_tokens: v.number(),
-    total_tokens: v.number(),
-  }),
 });

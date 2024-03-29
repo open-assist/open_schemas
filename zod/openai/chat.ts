@@ -231,9 +231,4 @@ export const ChatCompletionChunkObject = z.object({
   model: z.string(),
   system_fingerprint: z.string(),
   object: z.literal("chat.completion.chunk").default("chat.completion.chunk"),
-  usage: z.object({
-    completion_tokens: z.number(),
-    prompt_tokens: z.number(),
-    total_tokens: z.number(),
-  }),
 });
