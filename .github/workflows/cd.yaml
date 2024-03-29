@@ -8,6 +8,9 @@ jobs:
   publish:
     name: Publish packages to JSR
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Clone repository
         uses: actions/checkout@v4

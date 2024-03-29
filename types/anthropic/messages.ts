@@ -151,3 +151,112 @@ export type CreateMessageResponse = {
   stop_sequence?: string;
   usage: MessageUsage;
 };
+
+/**
+ * Contains a Message object with empty content.
+ *
+ * @example
+ * ```js
+ * event: message_start
+ * data: {"type": "message_start", "message": {"id": "msg_1nZdL29xx5MUA1yADyHTEsnR8uuvGzszyY", "type": "message", "role": "assistant", "content": [], "model": "claude-3-opus-20240229", "stop_reason": null, "stop_sequence": null, "usage": {"input_tokens": 25, "output_tokens": 1}}}
+ * ```
+ */
+export type MessageStartEvent = {
+  /**
+   * @default message_start
+   */
+  type: "message_start";
+  message: Message;
+};
+
+/**
+ * Indicates top-level changes to the final Message object.
+ *
+ * @example
+ * ```js
+ * event: message_delta
+ * data: {"type": "message_delta", "delta": {"stop_reason": "end_turn", "stop_sequence":null, "usage":{"output_tokens": 15}}}
+ * ```
+ */
+export type MessageDeltaEvent = {
+  type: "message_delta";
+  delta: {
+    stop_reason?: StopReason;
+    stop_sequence?: string;
+  };
+  usage: {
+    /**
+     * @minimum 0
+     */
+    output_tokens: number;
+  };
+};
+
+/**
+ * A final message_stop event.
+ *
+ * @example
+ * ```js
+ * event: message_stop
+ * data: {"type": "message_stop"}
+ * ```
+ */
+export type MessageStopEvent = {
+  type: "message_stop";
+};
+
+/**
+ * The start event for content block.
+ *
+ * @example
+ * ```js
+ * event: content_block_start
+ * data: {"type": "content_block_start", "index": 0, "content_block": {"type": "text", "text": ""}}
+ * ```
+ */
+export type ContentBlockStartEvent = {
+  type: "content_block_start";
+  /**
+   * @minimum 0
+   */
+  index: number;
+  content_block: {
+    type: "text";
+    text: string;
+  };
+};
+
+/**
+ * The delta event for content block.
+ *
+ * @example
+ * ```js
+ * event: content_block_delta
+ * data: {"type": "content_block_delta", "index": 0, "delta": {"type": "text_delta", "text": "Hello"}}
+ * ```
+ */
+export type ContentBlockDeltaEvent = {
+  type: "content_block_delta";
+  index: number;
+  delta: {
+    type: "text_delta";
+    text: string;
+  };
+};
+
+/**
+ * The stop event for content block.
+ *
+ * @example
+ * ```js
+ * event: content_block_stop
+ * data: {"type": "content_block_stop", "index": 0}
+ * ```
+ */
+export type ContentBlockStopEvent = {
+  type: "content_block_stop";
+  /**
+   * @minimum 0
+   */
+  index: number;
+};

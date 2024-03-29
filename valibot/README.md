@@ -55,8 +55,20 @@ bunx jsr add @open-schemas/valibot
 
 ## Usage
 
+### Anthropic
+
 ```ts
+import { parse } from "valibot";
+import { CreateMessageRequest } from "@open-schemas/valibot/anthropic";
+
+parse(CreateMessageRequest, {});
+```
+
+### OpenAI
+
+```ts
+import { parse } from "valibot";
 import { CreateChatCompletionRequest } from "@open-schemas/valibot/openai";
 
-CreateChatCompletionRequest.parse({});
+parse(CreateChatCompletionRequest, {});
 ```

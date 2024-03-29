@@ -76,3 +76,52 @@ export const CreateMessageResponse = v.object({
   stop_sequence: v.nullish(v.string()),
   usage: MessageUsage,
 });
+
+export type MessageStartEvent = v.Output<typeof MessageStartEvent>;
+export const MessageStartEvent = v.object({
+  type: v.literal("message_start"),
+  message: Message,
+});
+
+export type MessageDeltaEvent = v.Output<typeof MessageDeltaEvent>;
+export const MessageDeltaEvent = v.object({
+  type: v.literal("message_delta"),
+  delta: v.object({
+    stop_reason: v.nullish(StopReason),
+    stop_sequence: v.nullish(v.string()),
+  }),
+  usage: v.object({
+    output_tokens: v.number([v.minValue(0)]),
+  }),
+});
+
+export type MessageStopEvent = v.Output<typeof MessageStopEvent>;
+export const MessageStopEvent = v.object({
+  type: v.literal("message_stop"),
+});
+
+export type ContentBlockStartEvent = v.Output<typeof ContentBlockStartEvent>;
+export const ContentBlockStartEvent = v.object({
+  type: v.literal("content_block_start"),
+  index: v.number([v.minValue(0)]),
+  content_block: v.object({
+    type: v.literal("text"),
+    text: v.string(),
+  }),
+});
+
+export type ContentBlockDeltaEvent = v.Output<typeof ContentBlockDeltaEvent>;
+export const ContentBlockDeltaEvent = v.object({
+  type: v.literal("content_block_delta"),
+  index: v.number(),
+  delta: v.object({
+    type: v.literal("text_delta"),
+    text: v.string(),
+  }),
+});
+
+export type ContentBlockStopEvent = v.Output<typeof ContentBlockStopEvent>;
+export const ContentBlockStopEvent = v.object({
+  type: v.literal("content_block_stop"),
+  index: v.number([v.minValue(0)]),
+});

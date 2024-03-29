@@ -1,11 +1,5 @@
 import z from "zod";
 
-export type TextContent = z.infer<typeof TextContent>;
-export const TextContent = z.object({
-  type: z.literal("text").default("text"),
-  text: z.string(),
-});
-
 export type ImageContentSource = z.infer<typeof ImageContentSource>;
 export const ImageContentSource = z.object({
   type: z.literal("base64").default("base64"),
@@ -23,6 +17,12 @@ export type ImageContent = z.infer<typeof ImageContent>;
 export const ImageContent = z.object({
   type: z.literal("image").default("image"),
   source: ImageContentSource,
+});
+
+export type TextContent = z.infer<typeof TextContent>;
+export const TextContent = z.object({
+  type: z.literal("text").default("text"),
+  text: z.string(),
 });
 
 export type Content = z.infer<typeof Content>;
@@ -75,4 +75,53 @@ export const CreateMessageResponse = z.object({
   stop_reason: StopReason,
   stop_sequence: z.string().nullish(),
   usage: MessageUsage,
+});
+
+export type MessageStartEvent = z.infer<typeof MessageStartEvent>;
+export const MessageStartEvent = z.object({
+  type: z.literal("message_start").default("message_start"),
+  message: Message,
+});
+
+export type MessageDeltaEvent = z.infer<typeof MessageDeltaEvent>;
+export const MessageDeltaEvent = z.object({
+  type: z.literal("message_delta"),
+  delta: z.object({
+    stop_reason: StopReason.nullish(),
+    stop_sequence: z.string().nullish(),
+  }),
+  usage: z.object({
+    output_tokens: z.number().min(0),
+  }),
+});
+
+export type MessageStopEvent = z.infer<typeof MessageStopEvent>;
+export const MessageStopEvent = z.object({
+  type: z.literal("message_stop"),
+});
+
+export type ContentBlockStartEvent = z.infer<typeof ContentBlockStartEvent>;
+export const ContentBlockStartEvent = z.object({
+  type: z.literal("content_block_start"),
+  index: z.number().min(0),
+  content_block: z.object({
+    type: z.literal("text"),
+    text: z.string(),
+  }),
+});
+
+export type ContentBlockDeltaEvent = z.infer<typeof ContentBlockDeltaEvent>;
+export const ContentBlockDeltaEvent = z.object({
+  type: z.literal("content_block_delta"),
+  index: z.number(),
+  delta: z.object({
+    type: z.literal("text_delta"),
+    text: z.string(),
+  }),
+});
+
+export type ContentBlockStopEvent = z.infer<typeof ContentBlockStopEvent>;
+export const ContentBlockStopEvent = z.object({
+  type: z.literal("content_block_stop"),
+  index: z.number().min(0),
 });
