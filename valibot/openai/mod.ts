@@ -11,4 +11,5 @@
  *
  * @module
  */
+export * from "./assistants.ts";
 export * from "./chat.ts";
