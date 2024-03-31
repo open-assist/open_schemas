@@ -340,6 +340,11 @@ export const ModifyThreadRequest = z.object({
   metadata: Metadata.nullish(),
 });
 
+export type ModifyMessageRequest = z.infer<typeof ModifyMessageRequest>;
+export const ModifyMessageRequest = z.object({
+  metadata: Metadata.nullish(),
+});
+
 export type CreateRunRequest = z.infer<typeof CreateRunRequest>;
 export const CreateRunRequest = z.intersection(
   z.object({

@@ -349,9 +349,10 @@ export type CodeInterpreterImageOutput = {
   };
 };
 
-export type CodeInterpreterOutput =
-  | CodeInterpreterImageOutput
-  | CodeInterpreterLogOutput;
+/**
+ * The output of code interpreter tool
+ */
+export type CodeInterpreterOutput = CodeInterpreterImageOutput | CodeInterpreterLogOutput;
 
 /**
  * Details of the Code Interpreter tool call the run step was involved in.
@@ -412,7 +413,8 @@ export type RetrievalToolCall = {
  */
 export type FunctionToolCall = {
   /**
-   * The ID of the tool call. This ID must be referenced when you submit the tool outputs in using the Submit tool outputs to run endpoint.
+   * The ID of the tool call. This ID must be referenced when you submit the tool outputs in using
+   * the Submit tool outputs to run endpoint.
    */
   id: string;
 
@@ -441,10 +443,7 @@ export type FunctionToolCall = {
   };
 };
 
-export type ToolCall =
-  | CodeInterpreterToolCall
-  | RetrievalToolCall
-  | FunctionToolCall;
+export type ToolCall = CodeInterpreterToolCall | RetrievalToolCall | FunctionToolCall;
 
 /**
  * SubmitToolOutputs action.
@@ -725,10 +724,7 @@ export type StepObject = {
 /**
  * Create an assistant with a model and instructions.
  */
-export type CreateAssistantRequest = Omit<
-  AssistantObject,
-  "id" | "object" | "created_at"
->;
+export type CreateAssistantRequest = Omit<AssistantObject, "id" | "object" | "created_at">;
 
 /**
  * Create an assistant file by attaching a File to an assistant.
@@ -781,30 +777,32 @@ export type ModifyThreadRequest = {
 };
 
 /**
+ * Modifies a message.
+ */
+export type ModifyMessageRequest = {
+  metadata?: Metadata;
+};
+
+/**
  * Create a run
  */
-export type CreateRunRequest =
-  & {
-    /**
-     * Appends additional instructions at the end of the instructions for the run. This is useful for modifying the behavior on a per-run basis without overriding other instructions.
-     */
-    additional_instructions?: string;
-    /**
-     * If true, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a data: [DONE] message.
-     *
-     * @default false
-     */
-    stream?: boolean;
-  }
-  & Pick<
-    RunObject,
-    | "assistant_id"
-    | "model"
-    | "instructions"
-    | "tools"
-    | "metadata"
-    | "temperature"
-  >;
+export type CreateRunRequest = {
+  /**
+   * Appends additional instructions at the end of the instructions for the run. This is useful
+   * for modifying the behavior on a per-run basis without overriding other instructions.
+   */
+  additional_instructions?: string;
+  /**
+   * If true, returns a stream of events that happen during the Run as server-sent events,
+   * terminating when the Run enters a terminal state with a data: [DONE] message.
+   *
+   * @default false
+   */
+  stream?: boolean;
+} & Pick<
+  RunObject,
+  "assistant_id" | "model" | "instructions" | "tools" | "metadata" | "temperature"
+>;
 
 /**
  * Create a thread and run it in one request.

@@ -346,6 +346,11 @@ export const ModifyThreadRequest = v.object({
   metadata: v.optional(v.nullable(Metadata)),
 });
 
+export type ModifyMessageRequest = v.Output<typeof ModifyMessageRequest>;
+export const ModifyMessageRequest = v.object({
+  metadata: v.optional(v.nullable(Metadata)),
+});
+
 export type CreateRunRequest = v.Output<typeof CreateRunRequest>;
 export const CreateRunRequest = v.merge([
   v.object({
