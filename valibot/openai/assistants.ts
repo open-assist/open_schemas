@@ -321,7 +321,7 @@ export const ModifyAssistantRequest = v.merge([
   v.object({
     name: v.optional(v.nullable(v.string([v.maxLength(256)]))),
     description: v.optional(v.nullable(v.string([v.maxLength(512)]))),
-    model: v.optional(v.nullable(v.string())),
+    model: v.optional(v.string()),
     instructions: v.optional(v.nullable(v.string())),
     tools: v.optional(v.nullable(v.array(Tool))),
     file_ids: v.optional(v.nullable(v.array(v.string(), [v.maxLength(20)]))),

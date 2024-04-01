@@ -313,7 +313,7 @@ export const ModifyAssistantRequest = z.intersection(
   z.object({
     name: z.string().max(256).nullish(),
     description: z.string().max(512).nullish(),
-    model: z.string().nullish(),
+    model: z.string().optional(),
     instructions: z.string().nullish(),
     tools: z.array(Tool).nullish(),
     file_ids: z.array(z.string()).max(20).nullish(),
