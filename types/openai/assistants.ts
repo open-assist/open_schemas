@@ -832,7 +832,7 @@ export type ModifyRunRequest = {
 /**
  * Detial of tool output.
  */
-export type ToolOutpt = {
+export type ToolOutput = {
   /**
    * The ID of the tool call in the required_action object within the run object the output is
    * being submitted for.
@@ -852,7 +852,7 @@ export type SubmitToolOutputsToRunRequest = {
   /**
    * A list of tools for which the outputs are being submitted.
    */
-  tool_outputs: ToolOutpt[];
+  tool_outputs: ToolOutput[];
   /**
    * If true, returns a stream of events that happen during the Run as server-sent events,
    * terminating when the Run enters a terminal state with a data: [DONE] message.

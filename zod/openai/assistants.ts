@@ -377,14 +377,14 @@ export const ModifyRunRequest = z.object({
   metadata: Metadata.nullish(),
 });
 
-export type ToolOutpt = z.infer<typeof ToolOutpt>;
-export const ToolOutpt = z.object({
+export type ToolOutput = z.infer<typeof ToolOutput>;
+export const ToolOutput = z.object({
   tool_call_id: z.string(),
   output: z.string().nullish(),
 });
 
 export type SubmitToolOutputsToRunRequest = z.infer<typeof SubmitToolOutputsToRunRequest>;
 export const SubmitToolOutputsToRunRequest = z.object({
-  tool_outputs: z.array(ToolOutpt),
+  tool_outputs: z.array(ToolOutput),
   stream: z.boolean().default(false).nullish(),
 });

@@ -385,14 +385,14 @@ export const ModifyRunRequest = v.object({
   metadata: v.optional(v.nullable(Metadata)),
 });
 
-export type ToolOutpt = v.Output<typeof ToolOutpt>;
-export const ToolOutpt = v.object({
+export type ToolOutput = v.Output<typeof ToolOutput>;
+export const ToolOutput = v.object({
   tool_call_id: v.string(),
   output: v.optional(v.nullable(v.string())),
 });
 
 export type SubmitToolOutputsToRunRequest = v.Output<typeof SubmitToolOutputsToRunRequest>;
 export const SubmitToolOutputsToRunRequest = v.object({
-  tool_outputs: v.array(ToolOutpt),
+  tool_outputs: v.array(ToolOutput),
   stream: v.optional(v.nullable(v.boolean())),
 });
