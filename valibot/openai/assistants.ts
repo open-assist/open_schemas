@@ -98,7 +98,9 @@ export const MessageTextContent = v.object({
   type: v.literal("text"),
   text: v.object({
     value: v.string(),
-    annotations: v.array(v.union([FileCitationAnnotation, FilePathAnnotation])),
+    annotations: v.optional(
+      v.nullish(v.array(v.union([FileCitationAnnotation, FilePathAnnotation]))),
+    ),
   }),
 });
 

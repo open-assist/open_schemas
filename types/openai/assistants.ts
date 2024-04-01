@@ -225,10 +225,21 @@ export type FilePathAnnotation = {
  * The text content that is part of a message.
  */
 export type MessageTextContent = {
+  /**
+   * Always text.
+   *
+   * @default text
+   */
   type: "text";
+  /**
+   * Detail of text.
+   */
   text: {
+    /**
+     * The data that makes up the text.
+     */
     value: string;
-    annotations: (FileCitationAnnotation | FilePathAnnotation)[];
+    annotations?: (FileCitationAnnotation | FilePathAnnotation)[];
   };
 };
 

@@ -95,10 +95,10 @@ export const FilePathAnnotation = z.object({
 
 export type MessageTextContent = z.infer<typeof MessageTextContent>;
 export const MessageTextContent = z.object({
-  type: z.literal("text"),
+  type: z.literal("text").default("text"),
   text: z.object({
     value: z.string(),
-    annotations: z.array(z.union([FileCitationAnnotation, FilePathAnnotation])),
+    annotations: z.array(z.union([FileCitationAnnotation, FilePathAnnotation])).nullish(),
   }),
 });
 
