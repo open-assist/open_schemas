@@ -861,3 +861,97 @@ export type SubmitToolOutputsToRunRequest = {
    */
   stream?: boolean;
 };
+
+/* ------------------------------------------------------------------------------ */
+/* -------------------------------- Responses ----------------------------------- */
+/* ------------------------------------------------------------------------------ */
+
+/**
+ * Delete response
+ */
+type DeleteResponse = {
+  /**
+   * The id of object deleted.
+   */
+  id: string;
+  /**
+   * This always be true.
+   *
+   * @default true
+   */
+  deleted: true;
+};
+
+/**
+ * Delete an assistant.
+ */
+export type DeleteAssistantResponse = {
+  /**
+   * The object type, which is always assistant.deleted.
+   *
+   * @default assistant.deleted
+   */
+  object: "assistant.deleted";
+} & DeleteResponse;
+
+/**
+ * Delete an assistant file.
+ */
+export type DeleteAssistantFileResponse = {
+  /**
+   * The object type, which is always assistant.file.deleted.
+   *
+   * @default assistant.file.deleted
+   */
+  object: "assistant.file.deleted";
+} & DeleteResponse;
+
+/**
+ * Delete an thread.
+ */
+export type DeleteThreadResponse = {
+  /**
+   * The object type, which is always thread.deleted.
+   *
+   * @default thread.deleted
+   */
+  object: "thread.deleted";
+} & DeleteResponse;
+
+/* ------------------------------------------------------------------------------- */
+/* -------------------------------- Parameters ----------------------------------- */
+/* ------------------------------------------------------------------------------- */
+
+/**
+ * Pagination parameters
+ */
+export type Pagination = {
+  /**
+   * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+   *
+   * @default 20
+   * @maximum 100
+   * @minimum 1
+   */
+  limit: number;
+  /**
+   * A cursor for use in pagination. after is an object ID that defines your place in the list.
+   */
+  after?: string;
+  /**
+   * A cursor for use in pagination. before is an object ID that defines your place in the list.
+   */
+  before?: string;
+};
+
+/**
+ * Ordering parameters
+ */
+export type Ordering = {
+  /**
+   * Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order.
+   *
+   * @default desc
+   */
+  order?: "asc" | "desc";
+};

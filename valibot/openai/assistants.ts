@@ -400,3 +400,45 @@ export const SubmitToolOutputsToRunRequest = v.object({
   tool_outputs: v.array(ToolOutput),
   stream: v.optional(v.nullable(v.boolean())),
 });
+
+export type DeleteResponse = v.Output<typeof DeleteResponse>;
+export const DeleteResponse = v.object({
+  id: v.string(),
+  deleted: v.literal(true),
+});
+
+export type DeleteAssistantResponse = v.Output<typeof DeleteAssistantResponse>;
+export const DeleteAssistantResponse = v.intersect([
+  v.object({
+    object: v.literal("assistant.deleted"),
+  }),
+  DeleteResponse,
+]);
+
+export type DeleteAssistantFileResponse = v.Output<typeof DeleteAssistantFileResponse>;
+export const DeleteAssistantFileResponse = v.intersect([
+  v.object({
+    object: v.literal("assistant.file.deleted"),
+  }),
+  DeleteResponse,
+]);
+
+export type DeleteThreadResponse = v.Output<typeof DeleteThreadResponse>;
+export const DeleteThreadResponse = v.intersect([
+  v.object({
+    object: v.literal("thread.deleted"),
+  }),
+  DeleteResponse,
+]);
+
+export type Pagination = v.Output<typeof Pagination>;
+export const Pagination = v.object({
+  limit: v.number([v.minValue(1), v.maxValue(100)]),
+  after: v.optional(v.string()),
+  before: v.optional(v.string()),
+});
+
+export type Ordering = v.Output<typeof Ordering>;
+export const Ordering = v.object({
+  order: v.optional(v.union([v.literal("asc"), v.literal("desc")])),
+});

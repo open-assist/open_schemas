@@ -390,3 +390,48 @@ export const SubmitToolOutputsToRunRequest = z.object({
   tool_outputs: z.array(ToolOutput),
   stream: z.boolean().default(false).nullish(),
 });
+
+export type DeleteResponse = z.infer<typeof DeleteResponse>;
+export const DeleteResponse = z.object({
+  id: z.string(),
+  deleted: z.literal(true).default(true),
+});
+
+export type DeleteAssistantResponse = z.infer<typeof DeleteAssistantResponse>;
+export const DeleteAssistantResponse = z.intersection(
+  z.object({
+    object: z.literal("assistant.deleted").default("assistant.deleted"),
+  }),
+  DeleteResponse,
+);
+
+export type DeleteAssistantFileResponse = z.infer<typeof DeleteAssistantFileResponse>;
+export const DeleteAssistantFileResponse = z.intersection(
+  z.object({
+    object: z.literal("assistant.file.deleted").default("assistant.file.deleted"),
+  }),
+  DeleteResponse,
+);
+
+export type DeleteThreadResponse = z.infer<typeof DeleteThreadResponse>;
+export const DeleteThreadResponse = z.intersection(
+  z.object({
+    object: z.literal("thread.deleted").default("thread.deleted"),
+  }),
+  DeleteResponse,
+);
+
+export type Pagination = z.infer<typeof Pagination>;
+export const Pagination = z.object({
+  limit: z.number().min(1).max(100).default(20),
+  after: z.string().optional(),
+  before: z.string().optional(),
+});
+
+export type Ordering = z.infer<typeof Ordering>;
+export const Ordering = z.object({
+  order: z
+    .union([z.literal("asc"), z.literal("desc")])
+    .default("desc")
+    .optional(),
+});
