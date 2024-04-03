@@ -5,7 +5,7 @@ export const ModelObject = v.object({
   id: v.string(),
   created: v.optional(v.number()),
   object: v.literal("model"),
-  own_by: v.string(),
+  owned_by: v.string(),
 });
 
 export type DeleteModelResponse = v.Output<typeof DeleteModelResponse>;

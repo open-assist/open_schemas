@@ -16,8 +16,10 @@ export type ModelObject = {
   object: "model";
   /**
    * The organization that owns the model.
+   *
+   * @default openai
    */
-  own_by: string;
+  owned_by: string;
 };
 
 export type DeleteModelResponse = {

@@ -5,7 +5,7 @@ export const ModelObject = z.object({
   id: z.string(),
   created: z.number().optional(),
   object: z.literal("model").default("model"),
-  own_by: z.string(),
+  owned_by: z.string().default("openai"),
 });
 
 export type DeleteModelResponse = z.infer<typeof DeleteModelResponse>;
