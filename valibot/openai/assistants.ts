@@ -109,7 +109,11 @@ export const MessageObject = v.merge([
   v.object({
     object: v.literal("thread.message"),
     thread_id: v.string(),
-    status: v.union([v.literal("in_progress"), v.literal("incomplete"), v.literal("completed")]),
+    status: v.optional(
+      v.nullable(
+        v.union([v.literal("in_progress"), v.literal("incomplete"), v.literal("completed")]),
+      ),
+    ),
     incomplete_details: v.optional(
       v.nullable(
         v.object({

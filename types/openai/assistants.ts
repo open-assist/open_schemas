@@ -260,7 +260,7 @@ export type MessageObject = {
   /**
    * The status of the message, which can be either in_progress, incomplete, or completed.
    */
-  status: "in_progress" | "incomplete" | "completed";
+  status?: "in_progress" | "incomplete" | "completed";
   /**
    * On an incomplete message, details about why the message is incomplete.
    */

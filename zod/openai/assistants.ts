@@ -107,7 +107,9 @@ export const MessageObject = z.intersection(
   z.object({
     object: z.literal("thread.message").default("thread.message"),
     thread_id: z.string(),
-    status: z.union([z.literal("in_progress"), z.literal("incomplete"), z.literal("completed")]),
+    status: z
+      .union([z.literal("in_progress"), z.literal("incomplete"), z.literal("completed")])
+      .nullish(),
     incomplete_details: z
       .object({
         reason: z.string(),
