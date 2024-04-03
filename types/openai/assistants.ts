@@ -869,7 +869,7 @@ export type SubmitToolOutputsToRunRequest = {
 /**
  * Delete response
  */
-type DeleteResponse = {
+export type DeleteResponse = {
   /**
    * The id of object deleted.
    */
