@@ -433,7 +433,7 @@ export const DeleteThreadResponse = v.intersect([
 
 export type Pagination = v.Output<typeof Pagination>;
 export const Pagination = v.object({
-  limit: v.number([v.minValue(1), v.maxValue(100)]),
+  limit: v.coerce(v.number([v.minValue(1), v.maxValue(100)]), Number),
   after: v.optional(v.string()),
   before: v.optional(v.string()),
 });

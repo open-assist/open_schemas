@@ -423,7 +423,7 @@ export const DeleteThreadResponse = z.intersection(
 
 export type Pagination = z.infer<typeof Pagination>;
 export const Pagination = z.object({
-  limit: z.number().min(1).max(100).default(20),
+  limit: z.coerce.number().min(1).max(100).default(20),
   after: z.string().optional(),
   before: z.string().optional(),
 });
