@@ -430,8 +430,5 @@ export const Pagination = z.object({
 
 export type Ordering = z.infer<typeof Ordering>;
 export const Ordering = z.object({
-  order: z
-    .union([z.literal("asc"), z.literal("desc")])
-    .default("desc")
-    .optional(),
+  order: z.union([z.literal("asc"), z.literal("desc")]).default("desc"),
 });
