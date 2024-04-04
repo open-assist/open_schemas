@@ -18,9 +18,14 @@ export type FileObject = {
   created_at: number;
 
   /**
-   *The name of the file.
+   * The name of file.
    */
   filename: string;
+
+  /**
+   * The tye of file.
+   */
+  filetype?: string;
 
   /**
    * The object type, which is always file.
