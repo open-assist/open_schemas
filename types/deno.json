@@ -1,1 +1,1 @@
-{"name":"@open-schemas/types","version":"0.9.2","exports":{"./anthropic":"./anthropic/mod.ts","./openai":"./openai/mod.ts"}}
+{"name":"@open-schemas/types","version":"0.10.0","exports":{"./anthropic":"./anthropic/mod.ts","./openai":"./openai/mod.ts"}}

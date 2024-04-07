@@ -53,9 +53,55 @@ export type TextContent = {
 };
 
 /**
- * The union type of TextContent and ImageContent.
+ * Definition of tool use.
  */
-export type Content = TextContent | ImageContent;
+export type ToolUseContent = {
+  /**
+   * @default tool_use
+   */
+  type: "tool_use";
+  /**
+   * A unique identifier for this particular tool use block.
+   */
+  id: string;
+  /**
+   * The name of the tool being used.
+   */
+  name: string;
+  /**
+   * An object containing the input being passed to the tool, conforming to the tool's input_schema.
+   */
+  input: Record<string, unknown>;
+};
+
+/**
+ * The result of tool.
+ */
+export type ToolResultContent = {
+  /**
+   * Aways tool_result.
+   *
+   * @default tool_result
+   */
+  type: "tool_result";
+  /**
+   * The id of the tool use request this is a result for.
+   */
+  tool_use_id: string;
+  /**
+   * The result of the tool.
+   */
+  content?: string | TextContent[];
+  /**
+   * Set to true if the tool execution resulted in an error.
+   */
+  is_error?: boolean;
+};
+
+/**
+ * The union type of TextContent, ImageContent and ToolResultContent.
+ */
+export type Content = TextContent | ImageContent | ToolResultContent;
 
 /**
  * Input messages.
@@ -77,6 +123,24 @@ export type Content = TextContent | ImageContent;
 export type Message = {
   role: "user" | "assistant";
   content?: string | Content[];
+};
+
+/**
+ * Definition of tool
+ */
+export type Tool = {
+  /**
+   * Name of the tool.
+   */
+  name: string;
+  /**
+   * Optional, but strongly-recommended description of the tool.
+   */
+  description?: string;
+  /**
+   * JSON schema for the tool input shape that the model will produce in tool_use output content blocks.
+   */
+  input_schema: Record<string, unknown>;
 };
 
 /**
@@ -108,6 +172,7 @@ export type CreateMessageRequest = {
    * @minimum 0
    */
   temperature?: number;
+  tools?: Tool[];
   top_p?: number;
   top_k?: number;
 };
@@ -115,7 +180,7 @@ export type CreateMessageRequest = {
 /**
  * The reason that we stopped.
  */
-export type StopReason = "end_turn" | "max_tokens" | "stop_sequence";
+export type StopReason = "end_turn" | "max_tokens" | "stop_sequence" | "tool_use";
 
 /**
  * Billing and rate-limit usage.
@@ -145,7 +210,7 @@ export type CreateMessageResponse = {
    * @default assistant
    */
   role: "assistant";
-  content: TextContent[];
+  content: (TextContent | ToolUseContent)[];
   model: string;
   stop_reason: StopReason;
   stop_sequence?: string;

@@ -4,11 +4,7 @@ export type ImageContentSource = z.infer<typeof ImageContentSource>;
 export const ImageContentSource = z.object({
   type: z.literal("base64").default("base64"),
   media_type: z
-    .union([
-      z.literal("image/jpeg"),
-      z.literal("image/png"),
-      z.literal("image/gif"),
-    ])
+    .union([z.literal("image/jpeg"), z.literal("image/png"), z.literal("image/gif")])
     .nullish(),
   data: z.string(),
 });
@@ -25,13 +21,36 @@ export const TextContent = z.object({
   text: z.string(),
 });
 
+export type ToolUseContent = z.infer<typeof ToolUseContent>;
+export const ToolUseContent = z.object({
+  type: z.literal("tool_use").default("tool_use"),
+  id: z.string(),
+  name: z.string(),
+  input: z.record(z.unknown()),
+});
+
+export type ToolResultContent = z.infer<typeof ToolResultContent>;
+export const ToolResultContent = z.object({
+  type: z.literal("tool_result").default("tool_result"),
+  tool_use_id: z.string(),
+  content: z.union([z.string(), z.array(TextContent)]).nullish(),
+  is_error: z.boolean().nullish(),
+});
+
 export type Content = z.infer<typeof Content>;
-export const Content = z.union([TextContent, ImageContent]);
+export const Content = z.union([TextContent, ImageContent, ToolResultContent]);
 
 export type Message = z.infer<typeof Message>;
 export const Message = z.object({
   role: z.union([z.literal("user"), z.literal("assistant")]),
   content: z.union([z.string(), z.array(Content)]).nullish(),
+});
+
+export type Tool = z.infer<typeof Tool>;
+export const Tool = z.object({
+  name: z.string(),
+  description: z.string().nullish(),
+  input_schema: z.record(z.unknown()),
 });
 
 export type CreateMessageRequest = z.infer<typeof CreateMessageRequest>;
@@ -48,6 +67,7 @@ export const CreateMessageRequest = z.object({
   stop_sequences: z.array(z.string()).nullish(),
   stream: z.boolean().default(false).nullish(),
   temperature: z.number().min(0).max(1).default(1).nullish(),
+  tools: z.array(Tool).nullish(),
   top_p: z.number().nullish(),
   top_k: z.number().nullish(),
 });
@@ -57,6 +77,7 @@ export const StopReason = z.union([
   z.literal("end_turn"),
   z.literal("max_tokens"),
   z.literal("stop_sequence"),
+  z.literal("tool_use"),
 ]);
 
 export type MessageUsage = z.infer<typeof MessageUsage>;
@@ -70,7 +91,7 @@ export const CreateMessageResponse = z.object({
   id: z.string(),
   type: z.literal("message").default("message"),
   role: z.literal("assistant").default("assistant"),
-  content: z.array(TextContent),
+  content: z.array(z.union([TextContent, ToolUseContent])),
   model: z.string(),
   stop_reason: StopReason,
   stop_sequence: z.string().nullish(),

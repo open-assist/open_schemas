@@ -4,13 +4,7 @@ export type ImageContentSource = v.Output<typeof ImageContentSource>;
 export const ImageContentSource = v.object({
   type: v.literal("base64"),
   media_type: v.optional(
-    v.nullable(
-      v.union([
-        v.literal("image/jpeg"),
-        v.literal("image/png"),
-        v.literal("image/gif"),
-      ]),
-    ),
+    v.nullable(v.union([v.literal("image/jpeg"), v.literal("image/png"), v.literal("image/gif")])),
   ),
   data: v.string(),
 });
@@ -27,13 +21,36 @@ export const TextContent = v.object({
   text: v.string(),
 });
 
+export type ToolUseContent = v.Output<typeof ToolUseContent>;
+export const ToolUseContent = v.object({
+  type: v.literal("tool_use"),
+  id: v.string(),
+  name: v.string(),
+  input: v.record(v.unknown()),
+});
+
+export type ToolResultContent = v.Output<typeof ToolResultContent>;
+export const ToolResultContent = v.object({
+  type: v.literal("tool_result"),
+  tool_use_id: v.string(),
+  content: v.optional(v.nullable(v.union([v.string(), v.array(TextContent)]))),
+  is_error: v.optional(v.boolean()),
+});
+
 export type Content = v.Output<typeof Content>;
-export const Content = v.union([TextContent, ImageContent]);
+export const Content = v.union([TextContent, ImageContent, ToolResultContent]);
 
 export type Message = v.Output<typeof Message>;
 export const Message = v.object({
   role: v.union([v.literal("user"), v.literal("assistant")]),
   content: v.optional(v.nullable(v.union([v.string(), v.array(Content)]))),
+});
+
+export type Tool = v.Output<typeof Tool>;
+export const Tool = v.object({
+  name: v.string(),
+  description: v.optional(v.nullable(v.string())),
+  input_schema: v.record(v.unknown()),
 });
 
 export type CreateMessageRequest = v.Output<typeof CreateMessageRequest>;
@@ -52,6 +69,7 @@ export const CreateMessageRequest = v.object({
   stop_sequences: v.optional(v.nullable(v.array(v.string()))),
   stream: v.optional(v.nullable(v.boolean())),
   temperature: v.optional(v.nullable(v.number([v.minValue(0), v.maxValue(1)]))),
+  tools: v.optional(v.nullable(v.array(Tool))),
   top_p: v.optional(v.nullable(v.number())),
   top_k: v.optional(v.nullable(v.number())),
 });
@@ -61,6 +79,7 @@ export const StopReason = v.union([
   v.literal("end_turn"),
   v.literal("max_tokens"),
   v.literal("stop_sequence"),
+  v.literal("tool_use"),
 ]);
 
 export type MessageUsage = v.Output<typeof MessageUsage>;
@@ -74,7 +93,7 @@ export const CreateMessageResponse = v.object({
   id: v.string(),
   type: v.literal("message"),
   role: v.literal("assistant"),
-  content: v.array(TextContent),
+  content: v.array(v.union([TextContent, ToolUseContent])),
   model: v.string(),
   stop_reason: StopReason,
   stop_sequence: v.optional(v.nullable(v.string())),
