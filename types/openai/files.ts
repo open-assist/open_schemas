@@ -23,11 +23,6 @@ export type FileObject = {
   filename: string;
 
   /**
-   * The tye of file.
-   */
-  filetype?: string;
-
-  /**
    * The object type, which is always file.
    *
    * @default file

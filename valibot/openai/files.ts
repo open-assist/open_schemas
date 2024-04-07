@@ -6,7 +6,6 @@ export const FileObject = v.object({
   bytes: v.number(),
   created_at: v.number(),
   filename: v.string(),
-  filetype: v.optional(v.string()),
   object: v.literal("file"),
   purpose: v.union([
     v.literal("fine-tune"),

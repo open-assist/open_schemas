@@ -6,7 +6,6 @@ export const FileObject = z.object({
   bytes: z.number(),
   created_at: z.number(),
   filename: z.string(),
-  filetype: z.string().optional(),
   object: z.literal("file").default("file"),
   purpose: z.union([
     z.literal("fine-tune"),
