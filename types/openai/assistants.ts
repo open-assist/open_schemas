@@ -414,9 +414,22 @@ export type RetrievalToolCall = {
   type: "retrieval";
 
   /**
-   * For now, this is always going to be an empty object.
+   * Detail of retrieval.
    */
-  retrieval?: Record<string, unknown>;
+  retrieval: {
+    /**
+     * The name of retrieval tool.
+     */
+    name: string;
+    /**
+     * The input to retrieval tool.
+     */
+    input: string;
+    /**
+     * The output from retrieval tool.
+     */
+    output?: string;
+  };
 };
 
 /**

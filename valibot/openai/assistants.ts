@@ -176,7 +176,11 @@ export type RetrievalToolCall = v.Output<typeof RetrievalToolCall>;
 export const RetrievalToolCall = v.object({
   id: v.string(),
   type: v.literal("retrieval"),
-  retrieval: v.optional(v.nullable(v.record(v.unknown()))),
+  retrieval: v.object({
+    name: v.string(),
+    input: v.string(),
+    output: v.optional(v.string()),
+  }),
 });
 
 export type FunctionToolCall = v.Output<typeof FunctionToolCall>;

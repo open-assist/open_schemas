@@ -170,7 +170,11 @@ export type RetrievalToolCall = z.infer<typeof RetrievalToolCall>;
 export const RetrievalToolCall = z.object({
   id: z.string(),
   type: z.literal("retrieval").default("retrieval"),
-  retrieval: z.record(z.unknown()).nullish(),
+  retrieval: z.object({
+    name: z.string(),
+    input: z.string(),
+    output: z.string().optional(),
+  }),
 });
 
 export type FunctionToolCall = z.infer<typeof FunctionToolCall>;
