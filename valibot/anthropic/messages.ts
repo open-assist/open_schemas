@@ -38,7 +38,7 @@ export const ToolResultContent = v.object({
 });
 
 export type Content = v.Output<typeof Content>;
-export const Content = v.union([TextContent, ImageContent, ToolResultContent]);
+export const Content = v.union([TextContent, ImageContent, ToolUseContent, ToolResultContent]);
 
 export type Message = v.Output<typeof Message>;
 export const Message = v.object({

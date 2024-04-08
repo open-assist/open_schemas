@@ -38,7 +38,7 @@ export const ToolResultContent = z.object({
 });
 
 export type Content = z.infer<typeof Content>;
-export const Content = z.union([TextContent, ImageContent, ToolResultContent]);
+export const Content = z.union([TextContent, ImageContent, ToolUseContent, ToolResultContent]);
 
 export type Message = z.infer<typeof Message>;
 export const Message = z.object({

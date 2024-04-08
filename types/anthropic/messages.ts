@@ -99,9 +99,9 @@ export type ToolResultContent = {
 };
 
 /**
- * The union type of TextContent, ImageContent and ToolResultContent.
+ * The union type of TextContent, ImageContent, ToolUseContent and ToolResultContent.
  */
-export type Content = TextContent | ImageContent | ToolResultContent;
+export type Content = TextContent | ImageContent | ToolUseContent | ToolResultContent;
 
 /**
  * Input messages.
