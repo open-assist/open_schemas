@@ -1,3 +1,53 @@
+# [2.0.0](https://github.com/open-assist/open_schemas/compare/1.3.0...2.0.0) (2024-04-09)
+
+
+### Bug Fixes
+
+* **anthropic:** support tool use content for message ([d85ac45](https://github.com/open-assist/open_schemas/commit/d85ac459608a48265db9fb64379ea91ca682f05f))
+* correct types of anthropic and openai ([6ed1f08](https://github.com/open-assist/open_schemas/commit/6ed1f08312ffac8938ac744594b5f449f3de58e4))
+* fix typos ([29ce4b5](https://github.com/open-assist/open_schemas/commit/29ce4b51882054308339f5b62f9615c3ae3f6107))
+* **openai:** add filetype for file object ([b32956c](https://github.com/open-assist/open_schemas/commit/b32956c5a6410a961d4a08d6d9d9ee7d9a631908))
+* **openai:** define the retrieval type ([8880174](https://github.com/open-assist/open_schemas/commit/8880174492a613ee6d180f2825c45640f900eef8))
+* **openai:** export files api ([84c9a04](https://github.com/open-assist/open_schemas/commit/84c9a0406013a3821ad555f240150d48f3928839))
+* **openai:** export types in mod.ts ([f94fb19](https://github.com/open-assist/open_schemas/commit/f94fb193c3939aff276f7682f5d013f0fe54270c))
+* **openai:** fix modify assistant request ([ee394a7](https://github.com/open-assist/open_schemas/commit/ee394a74badf5814016aed7167cd6bbc6b8f3113))
+* **openai:** fix typos ([09f9151](https://github.com/open-assist/open_schemas/commit/09f9151ce5a466d0067d942f3f92616c44b68398))
+* **openai:** remove optional for ordering ([cb43189](https://github.com/open-assist/open_schemas/commit/cb431895ccb3b89d82b7fa0c9cc21440832500f0))
+* **openai:** set annotations optional for message text content. ([4c58bb3](https://github.com/open-assist/open_schemas/commit/4c58bb398c217b28cc08fd6a53e99c837b5bf98f))
+* remove filetype for file object ([46896d7](https://github.com/open-assist/open_schemas/commit/46896d78e2fee8bff1354d43da55bbe6ee585fbc))
+* use coerce function for limit param ([56a02df](https://github.com/open-assist/open_schemas/commit/56a02df99a5fbbcbadcb35a6b5b4e5c29c605532))
+* **valibot:** replace nullish with optional and nullable ([2007c25](https://github.com/open-assist/open_schemas/commit/2007c25aa4ce5a0660abea6c2f1b9750d0c338bf))
+
+
+### Features
+
+* add unified response for open assistant ([88313a8](https://github.com/open-assist/open_schemas/commit/88313a822cfcbc4660afa6af89e9eb605ef935f0))
+* **anthropic:** support streaming messages ([b53b304](https://github.com/open-assist/open_schemas/commit/b53b3040bee0a72ca990fb89f2f67a718d06fe3e))
+* **anthropic:** support tool use ([119670f](https://github.com/open-assist/open_schemas/commit/119670fe53f6ef20e502a38ef088a97e0234d8a4))
+* **openai:** add ModifyMessageRequest type ([c47f5ba](https://github.com/open-assist/open_schemas/commit/c47f5ba2c00e1f1ba8f85242ae1e1a1fd95807d2))
+* **openai:** add pagination ordering and delete response types ([25e5a95](https://github.com/open-assist/open_schemas/commit/25e5a9502b2bc2dda51882e57bb372fd9eb8eaad))
+* **openai:** support assistant apis ([6846ffc](https://github.com/open-assist/open_schemas/commit/6846ffcb0688ed7de4fd990815e63c8bb8ca45a8))
+* **openai:** support files api ([e88a2c8](https://github.com/open-assist/open_schemas/commit/e88a2c89460620c38a533cbab68c34c36f430915))
+* **openai:** support models api ([2b188cf](https://github.com/open-assist/open_schemas/commit/2b188cf7f44c119381d6ea8fa463ffb7fcc51962))
+* refactor packages ([c81b2dd](https://github.com/open-assist/open_schemas/commit/c81b2ddbd66f9b5e7b8c87c78217384a04c0e865))
+
+
+### BREAKING CHANGES
+
+* move zod schemas package to one.
+    Before:
+    - @open-schemas/zod-anthropic
+    - @open-schemas/zod-googleai
+    - @open-schemas/zod-ollama
+    - @open-schemas/zod-openai
+
+    After:
+    - @open-schemas/zod
+
+    Add other packages:
+    - @open-schemas/types
+    - @open-schemas/valibot
+
 # [1.3.0](https://github.com/open-assist/open_schemas/compare/1.2.0...1.3.0) (2024-03-10)
 
 
