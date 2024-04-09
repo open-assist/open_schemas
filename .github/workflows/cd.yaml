@@ -1,11 +1,13 @@
 name: Continuous Delivery
 
-# on:
-#   push:
-#     tags:
-#       - "*"
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "*"
+
 jobs:
-  publish:
+  publish-jsr:
     name: Publish packages to JSR
     runs-on: ubuntu-latest
     permissions:
@@ -19,9 +21,6 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-
-      - name: Generate config files
-        run: deno task gen:jsr ${{github.ref_name}}
 
       - name: Publish @open-schema/types
         run: cd types && deno publish
