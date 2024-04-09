@@ -1,9 +1,9 @@
 name: Continuous Delivery
 
-on:
-  push:
-    tags:
-      - "*"
+# on:
+#   push:
+#     tags:
+#       - "*"
 jobs:
   publish:
     name: Publish packages to JSR

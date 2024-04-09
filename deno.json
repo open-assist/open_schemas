@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
-  "exclude": ["scripts/*", "templates/*", ".prettierrc.json", "*/*/README.md"],
+  "exclude": ["scripts/*", "*/*/README.md"],
   "imports": {
     "@deno/dnt": "jsr:@deno/dnt@^0.41.1",
     "@std/log": "jsr:@std/log@^0.221.0",
