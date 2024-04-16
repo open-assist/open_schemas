@@ -7,6 +7,40 @@ on:
       - "*"
 
 jobs:
+  publish-npm:
+    name: Publish packages to npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Build valibot schemas
+        run: deno task build:valibot ${{github.ref_name}}
+
+      - name: Build zod schemas
+        run: deno task build:zod ${{github.ref_name}}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Publish @open-schema/valibot
+        run: cd npm_valibot && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Publish @open-schema/zod
+        run: cd npm_zod && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
   publish-jsr:
     name: Publish packages to JSR
     runs-on: ubuntu-latest

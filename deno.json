@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
   "exclude": [".git", ".github", ".vscode", "scripts"],
   "imports": {
+    "dnt": "https://deno.land/x/dnt@0.40.0/mod.ts",
     "@deno/dnt": "jsr:@deno/dnt@^0.41.1",
     "@std/log": "jsr:@std/log@^0.221.0",
     "typebox-codegen": "https://esm.sh/@sinclair/typebox-codegen@0.9.8",
@@ -10,6 +11,8 @@
     "zod": "https://esm.sh/zod@3.22.4"
   },
   "tasks": {
+    "build:valibot": "deno run -A scripts/build_valibot.ts",
+    "build:zod": "deno run -A scripts/build_zod.ts",
     "gen:code": "deno run -A scripts/gen_code.ts",
     "gen:jsr": "deno run -A scripts/gen_jsr.ts"
   },
