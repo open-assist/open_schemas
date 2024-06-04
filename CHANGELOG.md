@@ -1,3 +1,18 @@
+## [2.1.1](https://github.com/open-assist/open_schemas/compare/2.1.0...2.1.1) (2024-06-04)
+
+
+### Bug Fixes
+
+* add default export for zod module ([7fef9da](https://github.com/open-assist/open_schemas/commit/7fef9da8c4461900bd21c09b4365da21d1ac1369))
+
+
+
+
+
+Generated ./zod/deno.json file.
+Generated ./valibot/deno.json file.
+Generated ./types/deno.json file.
+
 # [2.1.0](https://github.com/open-assist/open_schemas/compare/2.0.0...2.1.0) (2024-06-04)
 
 
