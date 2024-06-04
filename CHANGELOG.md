@@ -1,3 +1,18 @@
+## [2.1.3](https://github.com/open-assist/open_schemas/compare/2.1.2...2.1.3) (2024-06-04)
+
+
+### Bug Fixes
+
+* switch the dep of zod ([07cd7f3](https://github.com/open-assist/open_schemas/commit/07cd7f30f565ea2d61c60f02a088cc6995d994a9))
+
+
+
+
+
+Generated ./zod/deno.json file.
+Generated ./valibot/deno.json file.
+Generated ./types/deno.json file.
+
 ## [2.1.2](https://github.com/open-assist/open_schemas/compare/2.1.1...2.1.2) (2024-06-04)
 
 
