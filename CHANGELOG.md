@@ -1,3 +1,18 @@
+## [2.1.2](https://github.com/open-assist/open_schemas/compare/2.1.1...2.1.2) (2024-06-04)
+
+
+### Bug Fixes
+
+* add default for zod assistant file ([04c26c3](https://github.com/open-assist/open_schemas/commit/04c26c3c3b47ef4b214d32c9b55b5bab24c581b0))
+
+
+
+
+
+Generated ./zod/deno.json file.
+Generated ./valibot/deno.json file.
+Generated ./types/deno.json file.
+
 ## [2.1.1](https://github.com/open-assist/open_schemas/compare/2.1.0...2.1.1) (2024-06-04)
 
 
