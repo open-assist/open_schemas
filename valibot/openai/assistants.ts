@@ -111,7 +111,11 @@ export const MessageObject = v.merge([
     thread_id: v.string(),
     status: v.optional(
       v.nullable(
-        v.union([v.literal("in_progress"), v.literal("incomplete"), v.literal("completed")]),
+        v.union([
+          v.literal("in_progress"),
+          v.literal("incomplete"),
+          v.literal("completed"),
+        ]),
       ),
     ),
     incomplete_details: v.optional(
@@ -142,13 +146,17 @@ export const MessageFileObject = v.merge([
   ObjectMeta,
 ]);
 
-export type CodeInterpreterLogOutput = v.Output<typeof CodeInterpreterLogOutput>;
+export type CodeInterpreterLogOutput = v.Output<
+  typeof CodeInterpreterLogOutput
+>;
 export const CodeInterpreterLogOutput = v.object({
   type: v.literal("logs"),
   logs: v.string(),
 });
 
-export type CodeInterpreterImageOutput = v.Output<typeof CodeInterpreterImageOutput>;
+export type CodeInterpreterImageOutput = v.Output<
+  typeof CodeInterpreterImageOutput
+>;
 export const CodeInterpreterImageOutput = v.object({
   type: v.literal("image"),
   image: v.object({
@@ -195,7 +203,11 @@ export const FunctionToolCall = v.object({
 });
 
 export type ToolCall = v.Output<typeof ToolCall>;
-export const ToolCall = v.union([CodeInterpreterToolCall, RetrievalToolCall, FunctionToolCall]);
+export const ToolCall = v.union([
+  CodeInterpreterToolCall,
+  RetrievalToolCall,
+  FunctionToolCall,
+]);
 
 export type SubmitToolOutputsAction = v.Output<typeof SubmitToolOutputsAction>;
 export const SubmitToolOutputsAction = v.object({
@@ -252,7 +264,9 @@ export const RunObject = v.merge([
     file_ids: v.optional(v.nullable(v.array(v.string()))),
     metadata: v.optional(v.nullable(Metadata)),
     usage: v.optional(v.nullable(Usage)),
-    temperature: v.optional(v.nullable(v.number([v.minValue(0), v.maxValue(1)]))),
+    temperature: v.optional(
+      v.nullable(v.number([v.minValue(0), v.maxValue(1)])),
+    ),
   }),
   ObjectMeta,
 ]);
@@ -290,7 +304,10 @@ export const StepObject = v.merge([
     last_error: v.optional(
       v.nullable(
         v.object({
-          code: v.union([v.literal("server_error"), v.literal("rate_limit_exceeded")]),
+          code: v.union([
+            v.literal("server_error"),
+            v.literal("rate_limit_exceeded"),
+          ]),
           message: v.string(),
         }),
       ),
@@ -301,6 +318,37 @@ export const StepObject = v.merge([
     completed_at: v.optional(v.nullable(v.number())),
     metadata: v.optional(v.nullable(Metadata)),
     usage: v.optional(v.nullable(Usage)),
+  }),
+  ObjectMeta,
+]);
+
+export type VectorStoreObject = v.Output<typeof VectorStoreObject>;
+export const VectorStoreObject = v.intersect([
+  v.object({
+    object: v.literal("vector_store"),
+    name: v.optional(v.nullable(v.string())),
+    usage_bytes: v.number(),
+    file_counts: v.object({
+      in_progress: v.number(),
+      completed: v.number(),
+      failed: v.number(),
+      cancelled: v.number(),
+      total: v.number(),
+    }),
+    status: v.union([
+      v.literal("expired"),
+      v.literal("in_progress"),
+      v.literal("completed"),
+    ]),
+    expires_after: v.optional(v.nullable(
+      v.object({
+        anchor: v.literal("last_active_at"),
+        days: v.number(),
+      }),
+    )),
+    expires_at: v.optional(v.nullable(v.number())),
+    last_active_at: v.optional(v.nullable(v.number())),
+    metadata: v.optional(v.nullable(Metadata)),
   }),
   ObjectMeta,
 ]);
@@ -319,7 +367,9 @@ export const CreateAssistantRequest = v.merge([
   v.object({}),
 ]);
 
-export type CreateAssistantFileRequest = v.Output<typeof CreateAssistantFileRequest>;
+export type CreateAssistantFileRequest = v.Output<
+  typeof CreateAssistantFileRequest
+>;
 export const CreateAssistantFileRequest = v.object({
   file_id: v.string(),
 });
@@ -374,13 +424,17 @@ export const CreateRunRequest = v.merge([
       instructions: v.optional(v.nullable(v.string())),
       tools: v.optional(v.nullable(v.array(Tool))),
       metadata: v.optional(v.nullable(Metadata)),
-      temperature: v.optional(v.nullable(v.number([v.minValue(0), v.maxValue(1)]))),
+      temperature: v.optional(
+        v.nullable(v.number([v.minValue(0), v.maxValue(1)])),
+      ),
     }),
     v.object({}),
   ]),
 ]);
 
-export type CreateThreadAndRunRequest = v.Output<typeof CreateThreadAndRunRequest>;
+export type CreateThreadAndRunRequest = v.Output<
+  typeof CreateThreadAndRunRequest
+>;
 export const CreateThreadAndRunRequest = v.merge([
   v.object({
     thread: v.optional(v.nullable(CreateThreadRequest)),
@@ -399,10 +453,41 @@ export const ToolOutput = v.object({
   output: v.optional(v.nullable(v.string())),
 });
 
-export type SubmitToolOutputsToRunRequest = v.Output<typeof SubmitToolOutputsToRunRequest>;
+export type SubmitToolOutputsToRunRequest = v.Output<
+  typeof SubmitToolOutputsToRunRequest
+>;
 export const SubmitToolOutputsToRunRequest = v.object({
   tool_outputs: v.array(ToolOutput),
   stream: v.optional(v.nullable(v.boolean())),
+});
+
+export type CreateVectorStoreRequest = v.Output<
+  typeof CreateVectorStoreRequest
+>;
+export const CreateVectorStoreRequest = v.object({
+  file_ids: v.optional(v.nullable(v.array(v.string()))),
+  name: v.optional(v.nullable(v.string())),
+  expires_after: v.optional(v.nullable(
+    v.object({
+      anchor: v.literal("last_active_at"),
+      days: v.number(),
+    }),
+  )),
+  metadata: v.optional(v.nullable(Metadata)),
+});
+
+export type ModifyVectorStoreRequest = v.Output<
+  typeof ModifyVectorStoreRequest
+>;
+export const ModifyVectorStoreRequest = v.object({
+  name: v.optional(v.nullable(v.string())),
+  expires_after: v.optional(v.nullable(
+    v.object({
+      anchor: v.literal("last_active_at"),
+      days: v.number(),
+    }),
+  )),
+  metadata: v.optional(v.nullable(Metadata)),
 });
 
 export type DeleteResponse = v.Output<typeof DeleteResponse>;
@@ -419,7 +504,9 @@ export const DeleteAssistantResponse = v.intersect([
   DeleteResponse,
 ]);
 
-export type DeleteAssistantFileResponse = v.Output<typeof DeleteAssistantFileResponse>;
+export type DeleteAssistantFileResponse = v.Output<
+  typeof DeleteAssistantFileResponse
+>;
 export const DeleteAssistantFileResponse = v.intersect([
   v.object({
     object: v.literal("assistant.file.deleted"),
@@ -431,6 +518,16 @@ export type DeleteThreadResponse = v.Output<typeof DeleteThreadResponse>;
 export const DeleteThreadResponse = v.intersect([
   v.object({
     object: v.literal("thread.deleted"),
+  }),
+  DeleteResponse,
+]);
+
+export type DeleteVectorStoreResponse = v.Output<
+  typeof DeleteVectorStoreResponse
+>;
+export const DeleteVectorStoreResponse = v.intersect([
+  v.object({
+    object: v.literal("vector_store.deleted"),
   }),
   DeleteResponse,
 ]);

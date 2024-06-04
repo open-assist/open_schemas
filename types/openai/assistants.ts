@@ -363,7 +363,9 @@ export type CodeInterpreterImageOutput = {
 /**
  * The output of code interpreter tool
  */
-export type CodeInterpreterOutput = CodeInterpreterImageOutput | CodeInterpreterLogOutput;
+export type CodeInterpreterOutput =
+  | CodeInterpreterImageOutput
+  | CodeInterpreterLogOutput;
 
 /**
  * Details of the Code Interpreter tool call the run step was involved in.
@@ -467,7 +469,10 @@ export type FunctionToolCall = {
   };
 };
 
-export type ToolCall = CodeInterpreterToolCall | RetrievalToolCall | FunctionToolCall;
+export type ToolCall =
+  | CodeInterpreterToolCall
+  | RetrievalToolCall
+  | FunctionToolCall;
 
 /**
  * SubmitToolOutputs action.
@@ -741,6 +746,89 @@ export type StepObject = {
   usage?: Usage;
 } & ObjectMeta;
 
+/**
+ * A vector store is a collection of processed files can be used by the file_search tool.
+ */
+export type VectorStoreObject = {
+  /**
+   * The object type, which is always vector_store.
+   *
+   * @default vector_store
+   */
+  object: "vector_store";
+
+  /**
+   * The name of the vector store.
+   */
+  name?: string | null;
+
+  /**
+   * The total number of bytes used by the files in the vector store.
+   */
+  usage_bytes: number;
+
+  file_counts: {
+    /**
+     * The number of files that are currently being processed.
+     */
+    in_progress: number;
+
+    /**
+     * The number of files that have been successfully processed.
+     */
+    completed: number;
+
+    /**
+     * The number of files that have failed to process.
+     */
+    failed: number;
+
+    /**
+     * The number of files that were cancelled.
+     */
+    cancelled: number;
+
+    /**
+     * The total number of files.
+     */
+    total: number;
+  };
+  /**
+   * The status of the vector store.
+   * Can be either expired, in_progress, or completed.
+   * A status of completed indicates that the vector store is ready for use.
+   */
+  status: "expired" | "in_progress" | "completed";
+
+  /**
+   * The expiration policy for a vector store.
+   */
+  expires_after?: {
+    /**
+     * Anchor timestamp after which the expiration policy applies.
+     * Supported anchors: last_active_at.
+     */
+    anchor: "last_active_at";
+
+    /**
+     * The number of days after the anchor time that the vector store will expire.
+     */
+    days: number;
+  } | null;
+
+  /**
+   * The Unix timestamp (in seconds) for when the vector store will expire.
+   */
+  expires_at?: number | null;
+
+  /**
+   * The Unix timestamp (in seconds) for when the vector store was last active.
+   */
+  last_active_at?: number | null;
+
+  metadata?: Metadata | null;
+} & ObjectMeta;
+
 /* ----------------------------------------------------------------------------- */
 /* -------------------------------- Reuqests ----------------------------------- */
 /* ----------------------------------------------------------------------------- */
@@ -748,7 +836,10 @@ export type StepObject = {
 /**
  * Create an assistant with a model and instructions.
  */
-export type CreateAssistantRequest = Omit<AssistantObject, "id" | "object" | "created_at">;
+export type CreateAssistantRequest = Omit<
+  AssistantObject,
+  "id" | "object" | "created_at"
+>;
 
 /**
  * Create an assistant file by attaching a File to an assistant.
@@ -810,23 +901,30 @@ export type ModifyMessageRequest = {
 /**
  * Create a run
  */
-export type CreateRunRequest = {
-  /**
-   * Appends additional instructions at the end of the instructions for the run. This is useful
-   * for modifying the behavior on a per-run basis without overriding other instructions.
-   */
-  additional_instructions?: string;
-  /**
-   * If true, returns a stream of events that happen during the Run as server-sent events,
-   * terminating when the Run enters a terminal state with a data: [DONE] message.
-   *
-   * @default false
-   */
-  stream?: boolean;
-} & Pick<
-  RunObject,
-  "assistant_id" | "model" | "instructions" | "tools" | "metadata" | "temperature"
->;
+export type CreateRunRequest =
+  & {
+    /**
+     * Appends additional instructions at the end of the instructions for the run. This is useful
+     * for modifying the behavior on a per-run basis without overriding other instructions.
+     */
+    additional_instructions?: string;
+    /**
+     * If true, returns a stream of events that happen during the Run as server-sent events,
+     * terminating when the Run enters a terminal state with a data: [DONE] message.
+     *
+     * @default false
+     */
+    stream?: boolean;
+  }
+  & Pick<
+    RunObject,
+    | "assistant_id"
+    | "model"
+    | "instructions"
+    | "tools"
+    | "metadata"
+    | "temperature"
+  >;
 
 /**
  * Create a thread and run it in one request.
@@ -873,6 +971,73 @@ export type SubmitToolOutputsToRunRequest = {
    * @default false
    */
   stream?: boolean;
+};
+
+/**
+ * Represents the request body for creating a vector store.
+ */
+export type CreateVectorStoreRequest = {
+  /**
+   * A list of File IDs that the vector store should use.
+   * Useful for tools like file_search that can access files.
+   */
+  file_ids?: string[] | null;
+
+  /**
+   * The name of the vector store.
+   */
+  name?: string | null;
+
+  /**
+   * The expiration policy for a vector store.
+   */
+  expires_after?: {
+    /**
+     * Anchor timestamp after which the expiration policy applies.
+     * Supported anchors: last_active_at.
+     *
+     * @default last_active_at
+     */
+    anchor: "last_active_at";
+
+    /**
+     * The number of days after the anchor time that the vector store will expire.
+     */
+    days: number;
+  } | null;
+
+  metadata?: Metadata | null;
+};
+
+/**
+ * Represents the request body for modifying a vector store.
+ */
+export type ModifyVectorStoreRequest = {
+  /**
+   * The name of the vector store.
+   * Can be set to null to remove the name.
+   */
+  name?: string | null;
+
+  /**
+   * The expiration policy for a vector store.
+   */
+  expires_after?: {
+    /**
+     * Anchor timestamp after which the expiration policy applies.
+     * Supported anchors: last_active_at.
+     *
+     * @default last_active_at
+     */
+    anchor: "last_active_at";
+
+    /**
+     * The number of days after the anchor time that the vector store will expire.
+     */
+    days: number;
+  } | null;
+
+  metadata?: Metadata | null;
 };
 
 /* ------------------------------------------------------------------------------ */
@@ -929,6 +1094,18 @@ export type DeleteThreadResponse = {
    * @default thread.deleted
    */
   object: "thread.deleted";
+} & DeleteResponse;
+
+/**
+ * Delete an vector store.
+ */
+export type DeleteVectorStoreResponse = {
+  /**
+   * The object type, which is always vector_store.deleted.
+   *
+   * @default vector_store.deleted
+   */
+  object: "vector_store.deleted";
 } & DeleteResponse;
 
 /* ------------------------------------------------------------------------------- */

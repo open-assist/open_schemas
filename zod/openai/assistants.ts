@@ -98,7 +98,8 @@ export const MessageTextContent = z.object({
   type: z.literal("text").default("text"),
   text: z.object({
     value: z.string(),
-    annotations: z.array(z.union([FileCitationAnnotation, FilePathAnnotation])).nullish(),
+    annotations: z.array(z.union([FileCitationAnnotation, FilePathAnnotation]))
+      .nullish(),
   }),
 });
 
@@ -108,7 +109,11 @@ export const MessageObject = z.intersection(
     object: z.literal("thread.message").default("thread.message"),
     thread_id: z.string(),
     status: z
-      .union([z.literal("in_progress"), z.literal("incomplete"), z.literal("completed")])
+      .union([
+        z.literal("in_progress"),
+        z.literal("incomplete"),
+        z.literal("completed"),
+      ])
       .nullish(),
     incomplete_details: z
       .object({
@@ -142,7 +147,9 @@ export const CodeInterpreterLogOutput = z.object({
   logs: z.string(),
 });
 
-export type CodeInterpreterImageOutput = z.infer<typeof CodeInterpreterImageOutput>;
+export type CodeInterpreterImageOutput = z.infer<
+  typeof CodeInterpreterImageOutput
+>;
 export const CodeInterpreterImageOutput = z.object({
   type: z.literal("image").default("image"),
   image: z.object({
@@ -189,7 +196,11 @@ export const FunctionToolCall = z.object({
 });
 
 export type ToolCall = z.infer<typeof ToolCall>;
-export const ToolCall = z.union([CodeInterpreterToolCall, RetrievalToolCall, FunctionToolCall]);
+export const ToolCall = z.union([
+  CodeInterpreterToolCall,
+  RetrievalToolCall,
+  FunctionToolCall,
+]);
 
 export type SubmitToolOutputsAction = z.infer<typeof SubmitToolOutputsAction>;
 export const SubmitToolOutputsAction = z.object({
@@ -281,7 +292,10 @@ export const StepObject = z.intersection(
     step_details: z.union([MessageCreationDetail, ToolCallsDetail]),
     last_error: z
       .object({
-        code: z.union([z.literal("server_error"), z.literal("rate_limit_exceeded")]),
+        code: z.union([
+          z.literal("server_error"),
+          z.literal("rate_limit_exceeded"),
+        ]),
         message: z.string(),
       })
       .nullish(),
@@ -291,6 +305,37 @@ export const StepObject = z.intersection(
     completed_at: z.number().nullish(),
     metadata: Metadata.nullish(),
     usage: Usage.nullish(),
+  }),
+  ObjectMeta,
+);
+
+export type VectorStoreObject = z.infer<typeof VectorStoreObject>;
+export const VectorStoreObject = z.intersection(
+  z.object({
+    object: z.literal("vector_store").default("vector_store"),
+    name: z.string().nullish(),
+    usage_bytes: z.number(),
+    file_counts: z.object({
+      in_progress: z.number(),
+      completed: z.number(),
+      failed: z.number(),
+      cancelled: z.number(),
+      total: z.number(),
+    }),
+    status: z.union([
+      z.literal("expired"),
+      z.literal("in_progress"),
+      z.literal("completed"),
+    ]),
+    expires_after: z
+      .object({
+        anchor: z.literal("last_active_at"),
+        days: z.number(),
+      })
+      .nullish(),
+    expires_at: z.number().nullish(),
+    last_active_at: z.number().nullish(),
+    metadata: Metadata.nullish(),
   }),
   ObjectMeta,
 );
@@ -309,7 +354,9 @@ export const CreateAssistantRequest = z.intersection(
   z.object({}),
 );
 
-export type CreateAssistantFileRequest = z.infer<typeof CreateAssistantFileRequest>;
+export type CreateAssistantFileRequest = z.infer<
+  typeof CreateAssistantFileRequest
+>;
 export const CreateAssistantFileRequest = z.object({
   file_id: z.string(),
 });
@@ -370,7 +417,9 @@ export const CreateRunRequest = z.intersection(
   ),
 );
 
-export type CreateThreadAndRunRequest = z.infer<typeof CreateThreadAndRunRequest>;
+export type CreateThreadAndRunRequest = z.infer<
+  typeof CreateThreadAndRunRequest
+>;
 export const CreateThreadAndRunRequest = z.intersection(
   z.object({
     thread: CreateThreadRequest.nullish(),
@@ -389,10 +438,37 @@ export const ToolOutput = z.object({
   output: z.string().nullish(),
 });
 
-export type SubmitToolOutputsToRunRequest = z.infer<typeof SubmitToolOutputsToRunRequest>;
+export type SubmitToolOutputsToRunRequest = z.infer<
+  typeof SubmitToolOutputsToRunRequest
+>;
 export const SubmitToolOutputsToRunRequest = z.object({
   tool_outputs: z.array(ToolOutput),
   stream: z.boolean().default(false).nullish(),
+});
+
+export type CreateVectorStoreRequest = z.infer<typeof CreateVectorStoreRequest>;
+export const CreateVectorStoreRequest = z.object({
+  file_ids: z.array(z.string()).nullish(),
+  name: z.string().nullish(),
+  expires_after: z
+    .object({
+      anchor: z.literal("last_active_at").default("last_active_at"),
+      days: z.number(),
+    })
+    .nullish(),
+  metadata: Metadata.nullish(),
+});
+
+export type ModifyVectorStoreRequest = z.infer<typeof ModifyVectorStoreRequest>;
+export const ModifyVectorStoreRequest = z.object({
+  name: z.union([z.string(), z.null()]).nullish(),
+  expires_after: z
+    .object({
+      anchor: z.literal("last_active_at").default("last_active_at"),
+      days: z.number(),
+    })
+    .nullish(),
+  metadata: Metadata.nullish(),
 });
 
 export type DeleteResponse = z.infer<typeof DeleteResponse>;
@@ -409,10 +485,14 @@ export const DeleteAssistantResponse = z.intersection(
   DeleteResponse,
 );
 
-export type DeleteAssistantFileResponse = z.infer<typeof DeleteAssistantFileResponse>;
+export type DeleteAssistantFileResponse = z.infer<
+  typeof DeleteAssistantFileResponse
+>;
 export const DeleteAssistantFileResponse = z.intersection(
   z.object({
-    object: z.literal("assistant.file.deleted").default("assistant.file.deleted"),
+    object: z.literal("assistant.file.deleted").default(
+      "assistant.file.deleted",
+    ),
   }),
   DeleteResponse,
 );
@@ -421,6 +501,16 @@ export type DeleteThreadResponse = z.infer<typeof DeleteThreadResponse>;
 export const DeleteThreadResponse = z.intersection(
   z.object({
     object: z.literal("thread.deleted").default("thread.deleted"),
+  }),
+  DeleteResponse,
+);
+
+export type DeleteVectorStoreResponse = z.infer<
+  typeof DeleteVectorStoreResponse
+>;
+export const DeleteVectorStoreResponse = z.intersection(
+  z.object({
+    object: z.literal("vector_store.deleted").default("vector_store.deleted"),
   }),
   DeleteResponse,
 );

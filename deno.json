@@ -1,9 +1,7 @@
 {
-  "$schema": "https://raw.githubusercontent.com/denoland/deno/main/cli/schemas/config-file.v1.json",
   "exclude": [".git", ".github", ".vscode", "scripts"],
   "imports": {
     "dnt": "https://deno.land/x/dnt@0.40.0/mod.ts",
-    "@deno/dnt": "jsr:@deno/dnt@^0.41.1",
     "@std/log": "jsr:@std/log@^0.221.0",
     "typebox-codegen": "https://esm.sh/@sinclair/typebox-codegen@0.9.8",
     "valibot": "https://esm.sh/valibot@0.30.0",
