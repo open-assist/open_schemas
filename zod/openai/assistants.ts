@@ -1,7 +1,5 @@
 import z from "zod";
 
-export default {};
-
 export type Metadata = z.infer<typeof Metadata>;
 export const Metadata = z.record(z.string());
 

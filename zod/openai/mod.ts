@@ -10,5 +10,8 @@
  *
  * @module
  */
-export * from "./index.ts";
-export { default as default } from "./index.ts";
+export * from "./assistants.ts";
+export * from "./chat.ts";
+export * from "./extra.ts";
+export * from "./files.ts";
+export * from "./models.ts";
