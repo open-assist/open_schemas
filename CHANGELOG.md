@@ -1,3 +1,18 @@
+# [2.1.0](https://github.com/open-assist/open_schemas/compare/2.0.0...2.1.0) (2024-06-04)
+
+
+### Features
+
+* add types for vector store of openai ([0478481](https://github.com/open-assist/open_schemas/commit/047848174d289a2baee722c691c8c0aaeb0917ac))
+
+
+
+
+
+Generated ./zod/deno.json file.
+Generated ./valibot/deno.json file.
+Generated ./types/deno.json file.
+
 # [2.0.0](https://github.com/open-assist/open_schemas/compare/1.3.0...2.0.0) (2024-04-09)
 
 
