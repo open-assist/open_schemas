@@ -1,3 +1,18 @@
+## [2.2.1](https://github.com/open-assist/open_schemas/compare/2.2.0...2.2.1) (2024-06-05)
+
+
+### Bug Fixes
+
+* correct types of openai ([fcf687f](https://github.com/open-assist/open_schemas/commit/fcf687f7ced986ecb6edfdbfdaa147c18fccc7c9))
+
+
+
+
+
+Generated ./zod/deno.json file.
+Generated ./valibot/deno.json file.
+Generated ./types/deno.json file.
+
 # [2.2.0](https://github.com/open-assist/open_schemas/compare/2.1.3...2.2.0) (2024-06-05)
 
 
