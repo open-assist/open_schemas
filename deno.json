@@ -2,11 +2,10 @@
   "exclude": [".git", ".github", ".vscode", "scripts"],
   "imports": {
     "dnt": "https://deno.land/x/dnt@0.40.0/mod.ts",
+    "valibot": "https://deno.land/x/valibot@v0.30.0/mod.ts",
     "zod": "https://deno.land/x/zod@v3.23.8/mod.ts",
     "@std/log": "jsr:@std/log@^0.221.0",
-    "typebox-codegen": "https://esm.sh/@sinclair/typebox-codegen@0.9.8",
-    "valibot": "https://esm.sh/valibot@0.30.0",
-    "yup": "https://esm.sh/yup@1.4.0"
+    "typebox-codegen": "https://esm.sh/@sinclair/typebox-codegen@0.9.8"
   },
   "tasks": {
     "build:valibot": "deno run -A scripts/build_valibot.ts",

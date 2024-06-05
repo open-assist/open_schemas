@@ -829,6 +829,54 @@ export type VectorStoreObject = {
   metadata?: Metadata | null;
 } & ObjectMeta;
 
+/**
+ * Represents a file attached to a vector store.
+ */
+export type VectorStoreFile = {
+  /**
+   * The object type, which is always vector_store.file.
+   *
+   * @default vector_store.file
+   */
+  object: "vector_store.file";
+
+  /**
+   * The total vector store usage in bytes.
+   * Note that this may be different from the original file size.
+   *
+   * @default 0
+   */
+  usage_bytes: number;
+
+  /**
+   * The ID of the vector store that the File is attached to.
+   */
+  vector_store_id: string;
+
+  /**
+   * The status of the vector store file.
+   * Can be either in_progress, completed, cancelled, or failed.
+   * The status completed indicates that the vector store file is ready for use.
+   */
+  status: "in_progress" | "completed" | "cancelled" | "failed";
+
+  /**
+   * The last error associated with this vector store file.
+   * Will be null if there are no errors.
+   */
+  last_error: {
+    /**
+     * One of server_error or rate_limit_exceeded.
+     */
+    code: "server_error" | "rate_limit_exceeded";
+
+    /**
+     * A human-readable description of the error.
+     */
+    message: string;
+  } | null;
+} & ObjectMeta;
+
 /* ----------------------------------------------------------------------------- */
 /* -------------------------------- Reuqests ----------------------------------- */
 /* ----------------------------------------------------------------------------- */
@@ -980,6 +1028,8 @@ export type CreateVectorStoreRequest = {
   /**
    * A list of File IDs that the vector store should use.
    * Useful for tools like file_search that can access files.
+   *
+   * @maxItems 10000
    */
   file_ids?: string[] | null;
 
@@ -1007,6 +1057,17 @@ export type CreateVectorStoreRequest = {
   } | null;
 
   metadata?: Metadata | null;
+};
+
+/**
+ * Represents the request body for creating a vector store file.
+ */
+export type CreateVectorStoreFileRequest = {
+  /**
+   * A File ID that the vector store should use.
+   * Useful for tools like file_search that can access files.
+   */
+  file_id: string;
 };
 
 /**
@@ -1097,7 +1158,7 @@ export type DeleteThreadResponse = {
 } & DeleteResponse;
 
 /**
- * Delete an vector store.
+ * Delete a vector store.
  */
 export type DeleteVectorStoreResponse = {
   /**
@@ -1106,6 +1167,18 @@ export type DeleteVectorStoreResponse = {
    * @default vector_store.deleted
    */
   object: "vector_store.deleted";
+} & DeleteResponse;
+
+/**
+ * Delete a vector store file.
+ */
+export type DeleteVectorStoreFileResponse = {
+  /**
+   * The object type, which is always vector_store.file.deleted.
+   *
+   * @default vector_store.file.deleted
+   */
+  object: "vector_store.file.deleted";
 } & DeleteResponse;
 
 /* ------------------------------------------------------------------------------- */

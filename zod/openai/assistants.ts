@@ -340,6 +340,32 @@ export const VectorStoreObject = z.intersection(
   ObjectMeta,
 );
 
+export type VectorStoreFile = z.infer<typeof VectorStoreFile>;
+export const VectorStoreFile = z.intersection(
+  z.object({
+    object: z.literal("vector_store.file").default("vector_store.file"),
+    usage_bytes: z.number().default(0),
+    vector_store_id: z.string(),
+    status: z.union([
+      z.literal("in_progress"),
+      z.literal("completed"),
+      z.literal("cancelled"),
+      z.literal("failed"),
+    ]),
+    last_error: z.union([
+      z.object({
+        code: z.union([
+          z.literal("server_error"),
+          z.literal("rate_limit_exceeded"),
+        ]),
+        message: z.string(),
+      }),
+      z.null(),
+    ]).optional(),
+  }),
+  ObjectMeta,
+);
+
 export type CreateAssistantRequest = z.infer<typeof CreateAssistantRequest>;
 export const CreateAssistantRequest = z.intersection(
   z.object({
@@ -448,7 +474,7 @@ export const SubmitToolOutputsToRunRequest = z.object({
 
 export type CreateVectorStoreRequest = z.infer<typeof CreateVectorStoreRequest>;
 export const CreateVectorStoreRequest = z.object({
-  file_ids: z.array(z.string()).nullish(),
+  file_ids: z.array(z.string()).max(10000).nullish(),
   name: z.string().nullish(),
   expires_after: z
     .object({
@@ -469,6 +495,13 @@ export const ModifyVectorStoreRequest = z.object({
     })
     .nullish(),
   metadata: Metadata.nullish(),
+});
+
+export type CreateVectorStoreFileRequest = z.infer<
+  typeof CreateVectorStoreFileRequest
+>;
+export const CreateVectorStoreFileRequest = z.object({
+  file_id: z.string(),
 });
 
 export type DeleteResponse = z.infer<typeof DeleteResponse>;
@@ -511,6 +544,18 @@ export type DeleteVectorStoreResponse = z.infer<
 export const DeleteVectorStoreResponse = z.intersection(
   z.object({
     object: z.literal("vector_store.deleted").default("vector_store.deleted"),
+  }),
+  DeleteResponse,
+);
+
+export type DeleteVectorStoreFileResponse = z.infer<
+  typeof DeleteVectorStoreFileResponse
+>;
+export const DeleteVectorStoreFileResponse = z.intersection(
+  z.object({
+    object: z
+      .literal("vector_store.file.deleted")
+      .default("vector_store.file.deleted"),
   }),
   DeleteResponse,
 );

@@ -353,6 +353,34 @@ export const VectorStoreObject = v.intersect([
   ObjectMeta,
 ]);
 
+export type VectorStoreFile = v.Output<typeof VectorStoreFile>;
+export const VectorStoreFile = v.intersect([
+  v.object({
+    object: v.literal("vector_store.file"),
+    usage_bytes: v.number(),
+    vector_store_id: v.string(),
+    status: v.union([
+      v.literal("in_progress"),
+      v.literal("completed"),
+      v.literal("cancelled"),
+      v.literal("failed"),
+    ]),
+    last_error: v.optional(
+      v.union([
+        v.object({
+          code: v.union([
+            v.literal("server_error"),
+            v.literal("rate_limit_exceeded"),
+          ]),
+          message: v.string(),
+        }),
+        v.null_(),
+      ]),
+    ),
+  }),
+  ObjectMeta,
+]);
+
 export type CreateAssistantRequest = v.Output<typeof CreateAssistantRequest>;
 export const CreateAssistantRequest = v.merge([
   v.object({
@@ -465,7 +493,7 @@ export type CreateVectorStoreRequest = v.Output<
   typeof CreateVectorStoreRequest
 >;
 export const CreateVectorStoreRequest = v.object({
-  file_ids: v.optional(v.nullable(v.array(v.string()))),
+  file_ids: v.optional(v.nullable(v.array(v.string(), [v.maxLength(10000)]))),
   name: v.optional(v.nullable(v.string())),
   expires_after: v.optional(v.nullable(
     v.object({
@@ -488,6 +516,13 @@ export const ModifyVectorStoreRequest = v.object({
     }),
   )),
   metadata: v.optional(v.nullable(Metadata)),
+});
+
+export type CreateVectorStoreFileRequest = v.Output<
+  typeof CreateVectorStoreFileRequest
+>;
+export const CreateVectorStoreFileRequest = v.object({
+  file_id: v.string(),
 });
 
 export type DeleteResponse = v.Output<typeof DeleteResponse>;
@@ -528,6 +563,16 @@ export type DeleteVectorStoreResponse = v.Output<
 export const DeleteVectorStoreResponse = v.intersect([
   v.object({
     object: v.literal("vector_store.deleted"),
+  }),
+  DeleteResponse,
+]);
+
+export type DeleteVectorStoreFileResponse = v.Output<
+  typeof DeleteVectorStoreFileResponse
+>;
+export const DeleteVectorStoreFileResponse = v.intersect([
+  v.object({
+    object: v.literal("vector_store.file.deleted"),
   }),
   DeleteResponse,
 ]);
