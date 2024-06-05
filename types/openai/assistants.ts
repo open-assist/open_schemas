@@ -824,7 +824,7 @@ export type VectorStoreObject = {
   /**
    * The Unix timestamp (in seconds) for when the vector store was last active.
    */
-  last_active_at?: number | null;
+  last_active_at: number;
 
   metadata?: Metadata | null;
 } & ObjectMeta;
@@ -832,7 +832,7 @@ export type VectorStoreObject = {
 /**
  * Represents a file attached to a vector store.
  */
-export type VectorStoreFile = {
+export type VectorStoreFileObject = {
   /**
    * The object type, which is always vector_store.file.
    *

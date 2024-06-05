@@ -347,14 +347,14 @@ export const VectorStoreObject = v.intersect([
       }),
     )),
     expires_at: v.optional(v.nullable(v.number())),
-    last_active_at: v.optional(v.nullable(v.number())),
+    last_active_at: v.number(),
     metadata: v.optional(v.nullable(Metadata)),
   }),
   ObjectMeta,
 ]);
 
-export type VectorStoreFile = v.Output<typeof VectorStoreFile>;
-export const VectorStoreFile = v.intersect([
+export type VectorStoreFileObject = v.Output<typeof VectorStoreFileObject>;
+export const VectorStoreFileObject = v.intersect([
   v.object({
     object: v.literal("vector_store.file"),
     usage_bytes: v.number(),

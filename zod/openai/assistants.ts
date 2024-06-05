@@ -334,14 +334,14 @@ export const VectorStoreObject = z.intersection(
       })
       .nullish(),
     expires_at: z.number().nullish(),
-    last_active_at: z.number().nullish(),
+    last_active_at: z.number(),
     metadata: Metadata.nullish(),
   }),
   ObjectMeta,
 );
 
-export type VectorStoreFile = z.infer<typeof VectorStoreFile>;
-export const VectorStoreFile = z.intersection(
+export type VectorStoreFileObject = z.infer<typeof VectorStoreFileObject>;
+export const VectorStoreFileObject = z.intersection(
   z.object({
     object: z.literal("vector_store.file").default("vector_store.file"),
     usage_bytes: z.number().default(0),
