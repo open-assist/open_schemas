@@ -1,6 +1,6 @@
 # Open Schemas
 
-Open Schemas is an open source tool that defines schemas for various LLM (Large Language Model) APIs like OpenAI, Google, etc using schema validation tools like zod, validbot, etc.
+Open Schemas is an open source tool that defines schemas for various LLM (Large Language Model) APIs like OpenAI, Google, etc using schema validation tools like Zod, Valibot, etc.
 
 ## Motivation
 
@@ -11,7 +11,7 @@ Open Schemas aims to solve this by crowdsourcing schema definitions for major LL
 ## Features
 
 - Community-driven schema definitions for LLM APIs like OpenAI, Anthropic, Google, etc.
-- Schemas defined using various validation libraries like zod, validbot, io-ts, etc.
+- Schemas defined using various validation libraries like Zod, Valibot, io-ts, etc.
 - Schema definitions for major LLM API endpoints like text completion, embeddings, moderation, etc.
 - Easy to integrate schemas into existing or new applications and tools.
 
